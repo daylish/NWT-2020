@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>etf.nwt</groupId>
-	<artifactId>function-microservice</artifactId>
+	<artifactId>list-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>function-microservice</name>
-	<description>Function microservice</description>
+	<name>list-microservice</name>
+	<description>List microservice</description>
 
 	<properties>
 		<java.version>1.8</java.version>

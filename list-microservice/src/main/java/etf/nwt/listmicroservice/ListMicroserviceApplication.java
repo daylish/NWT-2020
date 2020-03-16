@@ -1,13 +1,13 @@
-package etf.nwt.functionmicroservice;
+package etf.nwt.listmicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class FunctionMicroserviceApplication {
+public class ListMicroserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(FunctionMicroserviceApplication.class, args);
+		SpringApplication.run(ListMicroserviceApplication.class, args);
 	}
 
 }
