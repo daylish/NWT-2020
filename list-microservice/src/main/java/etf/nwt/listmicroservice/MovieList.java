@@ -22,6 +22,10 @@ public class MovieList {
 	private Long listID;
 	
 	@NotBlank
+	@NotNull(message = "List user ID cannot be null.")
+	private Long listUserID;
+	
+	@NotBlank
 	@NotNull(message = "List title cannot be null.")
 	private String listTitle;
 	
