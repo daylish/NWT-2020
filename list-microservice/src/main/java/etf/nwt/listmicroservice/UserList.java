@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 // items are added to this list with their respective statuses (determined by users)
-public class MovieList {
+public class UserList {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -33,14 +33,14 @@ public class MovieList {
 	private int itemCount;
 	
 	@ElementCollection
-	private List<MovieListItem> items;
+	private List<ListItem> items;
 	
-	protected MovieList() {}
+	protected UserList() {}
 	
-	public MovieList(String listTitle, int itemCount) {
+	public UserList(String listTitle, int itemCount) {
 	    this.listTitle = listTitle;
 	    this.itemCount = itemCount;
-	    this.items = new ArrayList<MovieListItem>();
+	    this.items = new ArrayList<ListItem>();
 	}
 	
 	public Long getListID() {
