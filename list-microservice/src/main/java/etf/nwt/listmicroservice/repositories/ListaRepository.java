@@ -8,4 +8,5 @@ import etf.nwt.listmicroservice.Lista;
 
 public interface ListaRepository extends CrudRepository<Lista, Long> {
     Lista findById(long id);
+    List<Lista> findByUserID(long userID);
 }
