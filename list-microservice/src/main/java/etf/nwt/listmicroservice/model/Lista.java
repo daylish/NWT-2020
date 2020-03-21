@@ -1,4 +1,4 @@
-package etf.nwt.listmicroservice;
+package etf.nwt.listmicroservice.model;
 
 import java.util.Date;
 import java.util.List;

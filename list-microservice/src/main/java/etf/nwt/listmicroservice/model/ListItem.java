@@ -1,4 +1,4 @@
-package etf.nwt.listmicroservice;
+package etf.nwt.listmicroservice.model;
 
 import java.util.Date;
 import java.util.Objects;
@@ -10,11 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.validation.constraints.*;
 
 @Entity
-@Table(name = "ListItem")
 public class ListItem {
 	
 	@Id
