@@ -21,10 +21,11 @@ public class UserMicroserviceApplication {
 	  public CommandLineRunner demo(UserRepository repository) {
 	    return (args) -> {
 	      // save a few users
-	      repository.save(new User("cxmgoblin69", "thiccthighs@gmail.com", "USA"));
-	      repository.save(new User("larrybtw", "notafurry@gmail.com", "Finland"));
-	      repository.save(new User("iamconfusion", "whyisitkansasbutnotarkansas@gmail.com", "USA"));
-	      
+	      repository.save(new User("nluebbert0", "vhakes0@smh.com.au", "USA"));
+	      repository.save(new User("cguiness1", "mmccall1@who.int", "Finland"));
+	      repository.save(new User("apelcheur2", "slonghorne2@wordpress.org", "Latvia"));
+	      repository.save(new User("gdickons3", "ataffe3@cmu.edu", "USA"));
+
 	      // fetch all users
 	      log.info("Users found with findAll():");
 	      log.info("-------------------------------");
