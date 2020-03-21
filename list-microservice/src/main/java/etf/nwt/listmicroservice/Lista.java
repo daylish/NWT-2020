@@ -36,11 +36,10 @@ public class Lista {
     public Lista() {
     }
 
-    public Lista(Long userID, String title, Date date, List<ListItem> userList) {
+    public Lista(Long userID, String title, Date date) {
         this.userID = userID;
         this.title = title;
         this.date = date;
-        this.userList = userList;
     }
 
     public Long getListID() {
