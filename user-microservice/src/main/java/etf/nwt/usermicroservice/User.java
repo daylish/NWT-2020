@@ -36,6 +36,8 @@ public class User {
 	@NotBlank
 	@NotNull (message = "Email cannot be null.")
 	@Email(message = "Email should be valid.")
+	// email should be unique
+	@Column(unique = true)
     private String email;
 	
 	@NotBlank

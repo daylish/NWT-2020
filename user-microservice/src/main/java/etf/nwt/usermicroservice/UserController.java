@@ -35,7 +35,7 @@ public class UserController {
 	}
 	
 	// create new user
-	// for some reason needs userLocation instead of location???
+	// for some reason needs userLocation instead of location??? - nvm i figured it out
 	@PostMapping("/users/new")
 	User newUser(@RequestBody User newUser) {
 		try {
@@ -49,6 +49,7 @@ public class UserController {
 	}
 	
 	// edit existing user
+	// this works too btw
 	/*
 	@PutMapping("/users/edit/{id}")
 	User editFullUser(@RequestBody User newUser, @PathVariable Long id) {
@@ -87,7 +88,7 @@ public class UserController {
 	
 	// delete existing user
 	@DeleteMapping("/users/delete/{id}")
-	void deleteEmployee(@PathVariable Long id) {
+	void deleteUser(@PathVariable Long id) {
 		try {
 			userRepository.deleteById(id);
 		}
