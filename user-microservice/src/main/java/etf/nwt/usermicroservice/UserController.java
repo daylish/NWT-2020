@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,12 +23,14 @@ public class UserController {
 	
 	// fetch all users
 	@GetMapping("/users")
+	@ResponseBody
 	List<User> allUsers() {
 		return userRepository.findAll();
 	}
 	
 	// fetch user by id
 	@GetMapping("/users/{id}")
+	@ResponseBody
 	User userById(@PathVariable Long id) {
 
 	  return userRepository.findById(id)
@@ -37,6 +40,7 @@ public class UserController {
 	// create new user
 	// for some reason needs userLocation instead of location??? - nvm i figured it out
 	@PostMapping("/users/new")
+	@ResponseBody
 	User newUser(@RequestBody User newUser) {
 		try {
 			userRepository.save(newUser);

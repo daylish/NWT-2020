@@ -32,6 +32,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+// ya this one was a failure
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
@@ -44,5 +45,4 @@ class UserMicroserviceApplicationTests {
 	void contextLoads() {
 		assertThat(userController).isNotNull();
 	}
-
 }
