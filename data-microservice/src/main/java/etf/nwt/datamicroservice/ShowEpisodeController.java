@@ -15,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShowEpisodeController {
 	
 	private ShowEpisodeRepository showEpisodeRepository;
-	
+	private ShowRepository showRepository;
+
 	public ShowEpisodeController(ShowEpisodeRepository repository) {
 		this.showEpisodeRepository = repository;
 	}
@@ -27,12 +28,15 @@ public class ShowEpisodeController {
 	@ResponseBody
 	List<ShowEpisode> episodesForShow(@PathVariable Long id) {
 		try {
+			showRepository.findById(id);
 			return showEpisodeRepository.findByContent(id);
 		}
 		catch (Exception e) {
-			return new ArrayList<ShowEpisode>();
+			throw new ShowNotFoundException(id);
 		}
 	}
+	
+	// should editing request episode id? idk lad
 	
 	@DeleteMapping("/episodes/delete/{id}")
 	void deleteEpisode(@PathVariable Long id) {

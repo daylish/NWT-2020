@@ -53,7 +53,7 @@ public class MovieController {
 	// edit only what makes sense
 	@PutMapping("/movies/edit/{id}")
 	@ResponseBody
-	Movie editUser(@RequestParam(name = "genre", required = false, defaultValue = "") String genre,
+	Movie editMovie(@RequestParam(name = "genre", required = false, defaultValue = "") String genre,
 		@RequestParam(name = "description", required = false, defaultValue = "") String description,
 		@PathVariable Long id) {
 

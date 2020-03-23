@@ -37,6 +37,14 @@ public class UserController {
 			  .orElseThrow(() -> new UserNotFoundException(id));
 	}
 	
+	// fetch users by location
+	@GetMapping("/users/location")
+	@ResponseBody
+	List<User> usersByLocation(@RequestParam(name = "location", required = false, defaultValue = "USA") String location) {
+
+		return userRepository.findByLocation(location);
+	}
+	
 	// create new user
 	// for some reason needs userLocation instead of location??? - nvm i figured it out
 	@PostMapping("/users/new")
