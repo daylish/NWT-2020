@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>etf.nwt</groupId>
-	<artifactId>display-microservice</artifactId>
+	<artifactId>stream-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>display-microservice</name>
-	<description>Display microservice</description>
+	<name>stream-microservice</name>
+	<description>Streaming microservice</description>
 
 	<properties>
 		<java.version>1.8</java.version>

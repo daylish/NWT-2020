@@ -1,13 +1,13 @@
-package etf.nwt.displaymicroservice;
+package etf.nwt.streammicroservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DisplayMicroserviceApplication {
+public class StreamingMicroserviceApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DisplayMicroserviceApplication.class, args);
+		SpringApplication.run(StreamingMicroserviceApplication.class, args);
 	}
 
 }

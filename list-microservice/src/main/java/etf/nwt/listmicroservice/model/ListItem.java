@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
 public class ListItem {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long listItemID;
 
 	@NotBlank
@@ -29,8 +29,8 @@ public class ListItem {
 	@NotNull(message = "ItemID can not be null!")
 	private Long itemId;
 
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "listID", nullable = false)
+	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@JoinColumn(name = "listaID")
 	private Lista lista;
 	
 	
@@ -56,11 +56,17 @@ public class ListItem {
 	public ListItem() {}
 
 
-	public ListItem(String listItemStatus, Date dateCreated, Long itemId, Lista lista) {
+	/*public ListItem(String listItemStatus, Date dateCreated, Long itemId, Lista lista) {
 		this.listItemStatus = listItemStatus;
 		this.dateCreated = dateCreated;
 		this.itemId = itemId;
 		this.lista = lista;
+	}*/
+
+	public ListItem(String listItemStatus, Date dateCreated, Long itemId) {
+		this.listItemStatus = listItemStatus;
+		this.dateCreated = dateCreated;
+		this.itemId = itemId;
 	}
 
 	@Override
@@ -71,12 +77,12 @@ public class ListItem {
 			return false;
 		}
 		ListItem listItem = (ListItem) o;
-		return Objects.equals(listItemID, listItem.listItemID) && Objects.equals(listItemStatus, listItem.listItemStatus) && Objects.equals(dateCreated, listItem.dateCreated) && Objects.equals(itemId, listItem.itemId) && Objects.equals(lista, listItem.lista);
+		return Objects.equals(listItemID, listItem.listItemID) && Objects.equals(listItemStatus, listItem.listItemStatus) && Objects.equals(dateCreated, listItem.dateCreated) && Objects.equals(itemId, listItem.itemId);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(listItemID, listItemStatus, dateCreated, itemId, lista);
+		return Objects.hash(listItemID, listItemStatus, itemId);
 	}
 
 }

@@ -1,12 +1,12 @@
 package etf.nwt.listmicroservice.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class Lista {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long listID;
 
     @NotNull
@@ -29,12 +29,20 @@ public class Lista {
     @NotNull
     private Date date;
 
-    @OneToMany(mappedBy = "lista", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<ListItem> userList;
+    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ListItem> itemsList = new ArrayList<ListItem>();
 
-
-    public Lista() {
+    public void addListItem(ListItem li) {
+        this.itemsList.add(li);
+        li.setLista(this);
     }
+
+    public void removeListItem(ListItem li) {
+        this.itemsList.remove(li);
+        li.setLista(null);
+    }
+
+    public Lista() {}
 
     public Lista(Long userID, String title, Date date) {
         this.userID = userID;
@@ -74,12 +82,12 @@ public class Lista {
         this.date = date;
     }
 
-    public List<ListItem> getUserList() {
-        return this.userList;
+    public List<ListItem> getItemsList() {
+        return this.itemsList;
     }
 
-    public void setUserList(List<ListItem> userList) {
-        this.userList = userList;
+    public void setItemsList(List<ListItem> itemsList) {
+        this.itemsList = new ArrayList<ListItem>(itemsList);
     }
 
     @Override
@@ -90,23 +98,19 @@ public class Lista {
             return false;
         }
         Lista lista = (Lista) o;
-        return Objects.equals(listID, lista.listID) && Objects.equals(userID, lista.userID) && Objects.equals(title, lista.title) && Objects.equals(date, lista.date) && Objects.equals(userList, lista.userList);
+        return Objects.equals(listID, lista.listID) && Objects.equals(userID, lista.userID) && Objects.equals(title, lista.title) && Objects.equals(date, lista.date);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(listID, userID, title, date, userList);
+        return Objects.hash(listID, userID, title, date);
     }
 
     @Override
-    public String toString() {
-        return "{" +
-            " listID='" + getListID() + "'" +
-            ", userID='" + getUserID() + "'" +
-            ", title='" + getTitle() + "'" +
-            ", date='" + getDate() + "'" +
-            ", userList='" + getUserList() + "'" +
-            "}";
-    }
+	public String toString() {
+	    return String.format(
+	        "Lista[id=%d, title='%s', dateCreated='%s', userID='%s']",
+	        this.listID, this.title, this.date, this.userID);
+	}
 
 }
