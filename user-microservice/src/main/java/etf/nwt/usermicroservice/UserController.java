@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,21 +23,32 @@ public class UserController {
 	
 	// fetch all users
 	@GetMapping("/users")
+	@ResponseBody
 	List<User> allUsers() {
 		return userRepository.findAll();
 	}
 	
 	// fetch user by id
 	@GetMapping("/users/{id}")
+	@ResponseBody
 	User userById(@PathVariable Long id) {
 
 	  return userRepository.findById(id)
 			  .orElseThrow(() -> new UserNotFoundException(id));
 	}
 	
+	// fetch users by location
+	@GetMapping("/users/location")
+	@ResponseBody
+	List<User> usersByLocation(@RequestParam(name = "location", required = false, defaultValue = "USA") String location) {
+
+		return userRepository.findByLocation(location);
+	}
+	
 	// create new user
-	// for some reason needs userLocation instead of location???
+	// for some reason needs userLocation instead of location??? - nvm i figured it out
 	@PostMapping("/users/new")
+	@ResponseBody
 	User newUser(@RequestBody User newUser) {
 		try {
 			userRepository.save(newUser);
@@ -49,6 +61,7 @@ public class UserController {
 	}
 	
 	// edit existing user
+	// this works too btw
 	/*
 	@PutMapping("/users/edit/{id}")
 	User editFullUser(@RequestBody User newUser, @PathVariable Long id) {
@@ -87,7 +100,7 @@ public class UserController {
 	
 	// delete existing user
 	@DeleteMapping("/users/delete/{id}")
-	void deleteEmployee(@PathVariable Long id) {
+	void deleteUser(@PathVariable Long id) {
 		try {
 			userRepository.deleteById(id);
 		}
