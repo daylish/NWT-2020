@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class ListItem {
 	
@@ -29,6 +31,7 @@ public class ListItem {
 	@NotNull(message = "ItemID can not be null!")
 	private Long itemId;
 
+	@JsonBackReference
 	@ManyToOne(optional = false, fetch = FetchType.LAZY)
 	@JoinColumn(name = "listaID")
 	private Lista lista;
@@ -70,19 +73,8 @@ public class ListItem {
 	}
 
 	@Override
-	public boolean equals(Object o) {
-		if (o == this)
-			return true;
-		if (!(o instanceof ListItem)) {
-			return false;
-		}
-		ListItem listItem = (ListItem) o;
-		return Objects.equals(listItemID, listItem.listItemID) && Objects.equals(listItemStatus, listItem.listItemStatus) && Objects.equals(dateCreated, listItem.dateCreated) && Objects.equals(itemId, listItem.itemId);
-	}
-
-	@Override
 	public int hashCode() {
-		return Objects.hash(listItemID, listItemStatus, itemId);
+		return Objects.hash(listItemID);
 	}
 
 }

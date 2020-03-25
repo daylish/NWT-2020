@@ -7,11 +7,14 @@ import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Lista {
@@ -29,7 +32,8 @@ public class Lista {
     @NotNull
     private Date date;
 
-    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<ListItem> itemsList = new ArrayList<ListItem>();
 
     public void addListItem(ListItem li) {
@@ -91,19 +95,8 @@ public class Lista {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o == this)
-            return true;
-        if (!(o instanceof Lista)) {
-            return false;
-        }
-        Lista lista = (Lista) o;
-        return Objects.equals(listID, lista.listID) && Objects.equals(userID, lista.userID) && Objects.equals(title, lista.title) && Objects.equals(date, lista.date);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(listID, userID, title, date);
+        return Objects.hash(listID);
     }
 
     @Override

@@ -1,8 +1,6 @@
 package etf.nwt.listmicroservice;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +18,7 @@ import etf.nwt.listmicroservice.repositories.ListaRepository;
 public class ListMicroserviceApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(ListMicroserviceApplication.class);
-
+	
 	public static void main(String[] args) {
 		SpringApplication.run(ListMicroserviceApplication.class, args);
 	}
@@ -35,7 +33,7 @@ public class ListMicroserviceApplication {
 			lista.addListItem(li);
 			listaRepository.save(lista);
 			lista = listaRepository.findById(1L);
-			log.info(lista.getItemsList().get(0).toString());
+			log.info(listaRepository.findAll().get(0).toString());
 	    };
 	}
 }
