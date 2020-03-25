@@ -59,14 +59,6 @@ public class ListItem {
 
 	public ListItem() {}
 
-
-	/*public ListItem(String listItemStatus, Date dateCreated, Long itemId, Lista lista) {
-		this.listItemStatus = listItemStatus;
-		this.dateCreated = dateCreated;
-		this.itemId = itemId;
-		this.lista = lista;
-	}*/
-
 	public ListItem(String listItemStatus, Date dateCreated, Long itemId) {
 		this.listItemStatus = listItemStatus;
 		this.dateCreated = dateCreated;
@@ -77,5 +69,4 @@ public class ListItem {
 	public int hashCode() {
 		return Objects.hash(listItemID);
 	}
-
 }

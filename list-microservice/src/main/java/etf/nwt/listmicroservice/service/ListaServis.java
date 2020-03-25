@@ -1,4 +1,4 @@
-package etf.nwt.listmicroservice.view;
+package etf.nwt.listmicroservice.service;
 
 import java.util.ArrayList;
 import java.util.List;

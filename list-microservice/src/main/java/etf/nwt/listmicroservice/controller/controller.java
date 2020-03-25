@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import etf.nwt.listmicroservice.model.ListItem;
 import etf.nwt.listmicroservice.model.Lista;
-import etf.nwt.listmicroservice.view.ListaServis;
+import etf.nwt.listmicroservice.service.ListaServis;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
-public class controller {
+public class Controller {
 
     @Autowired
     private ListaServis listaServis;
