@@ -1,4 +1,4 @@
-package etf.nwt.displaymicroservice;
+package etf.nwt.streammicroservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
