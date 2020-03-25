@@ -12,7 +12,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
@@ -23,13 +25,15 @@ public class Lista {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long listID;
 
-    @NotNull
+    @NotNull(message = "UserID cannot be null")
     private Long userID;
 
-    @NotNull
+    @NotNull(message = "List title cannot be null")
+    @NotBlank(message = "List title cannot be blank")
+    @Size(min = 3, max = 500, message = "List title must be between 3 and 500 characters long")
     private String title;
 
-    @NotNull
+    @NotNull(message = "Date cannot be null")
     private Date date;
 
     @JsonManagedReference

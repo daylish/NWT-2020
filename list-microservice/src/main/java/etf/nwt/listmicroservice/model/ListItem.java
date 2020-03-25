@@ -21,14 +21,15 @@ public class ListItem {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long listItemID;
 
-	@NotBlank
-	@NotNull(message = "Status can not be null!")
+	@NotBlank(message = "Status cannot be blank")
+	@NotNull(message = "Status cannot be null")
+	@Size(min = 3, max = 500, message = "ListItems status must be between 3 and 500 characters long")
 	private String listItemStatus;
 
-	@NotNull(message = "Date can not be null!")
+	@NotNull(message = "Date cannot be null")
 	private Date dateCreated;
 
-	@NotNull(message = "ItemID can not be null!")
+	@NotNull(message = "ItemID can not be null")
 	private Long itemId;
 
 	@JsonBackReference

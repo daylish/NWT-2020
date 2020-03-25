@@ -32,8 +32,13 @@ public class ListMicroserviceApplication {
 			li = new ListItem("Status novi", new Date(), (long) 15);
 			lista.addListItem(li);
 			listaRepository.save(lista);
-			lista = listaRepository.findById(1L);
-			log.info(listaRepository.findAll().get(0).toString());
+
+			lista = new Lista((long) 11, "Lista komedija", new Date());
+			li = new ListItem("Mr. Bean", new Date(), (long) 99);
+			lista.addListItem(li);
+			li = new ListItem("Funny movie", new Date(), (long) 88);
+			lista.addListItem(li);
+			listaRepository.save(lista);
 	    };
 	}
 }
