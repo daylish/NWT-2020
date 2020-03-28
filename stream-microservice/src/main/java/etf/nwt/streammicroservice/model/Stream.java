@@ -33,7 +33,7 @@ public class Stream {
     private Long itemId;
 
     @JsonManagedReference
-	@ManyToOne(optional = false, fetch = FetchType.LAZY)
+	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "platformaId")
     private Platform platforma;
     
@@ -72,8 +72,7 @@ public class Stream {
 
     public Stream() {}
 
-    public Stream(Long streamId, String link, Long itemId) {
-        this.streamId = streamId;
+    public Stream(String link, Long itemId) {
         this.link = link;
         this.itemId = itemId;
     }

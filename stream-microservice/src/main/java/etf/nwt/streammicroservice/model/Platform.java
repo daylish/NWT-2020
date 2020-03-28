@@ -65,8 +65,7 @@ public class Platform {
     public Platform() {
     }
 
-    public Platform(Long id, String name, String platformLink, double price) {
-        this.id = id;
+    public Platform(String name, String platformLink, double price) {
         this.name = name;
         this.platformLink = platformLink;
         this.price = price;
