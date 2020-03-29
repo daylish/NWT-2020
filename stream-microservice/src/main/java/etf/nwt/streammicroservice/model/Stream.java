@@ -14,8 +14,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 public class Stream {
 
@@ -32,7 +30,6 @@ public class Stream {
     @NotNull(message = "Item ID cannot be null")
     private Long itemId;
 
-    @JsonManagedReference
 	@ManyToOne(optional = false, fetch = FetchType.EAGER)
 	@JoinColumn(name = "platformaId")
     private Platform platforma;

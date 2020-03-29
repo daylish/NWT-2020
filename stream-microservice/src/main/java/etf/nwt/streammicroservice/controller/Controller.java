@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import etf.nwt.streammicroservice.model.Platform;
 import etf.nwt.streammicroservice.model.Stream;
-import etf.nwt.streammicroservice.repositories.PlatformRepository;
 import etf.nwt.streammicroservice.service.StreamService;
 
 @RestController
@@ -41,7 +40,7 @@ public class Controller {
         streamService.addPlatform(platform);
     }
 
-    @PostMapping("/platforms/{plaformId}/new")
+    @PostMapping("/platforms/{platformId}/new")
     public void addStream(@PathVariable("platformId") Long platformId, @RequestBody Stream stream) {
         streamService.addStream(platformId, stream);
     }

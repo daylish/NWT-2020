@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Platform {
@@ -40,7 +40,7 @@ public class Platform {
     @Min(value = 0, message = "Price cannot be lower than 0")
     private double price;
 
-    @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "platforma", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Stream> streams = new ArrayList<Stream>();
 
