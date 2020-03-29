@@ -2,6 +2,7 @@ package etf.nwt.usermicroservice;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,13 +35,13 @@ public class UserController {
 	User userById(@PathVariable Long id) {
 
 	  return userRepository.findById(id)
-			  .orElseThrow(() -> new UserNotFoundException(id));
+			  .orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND, id));
 	}
 	
 	// fetch users by location
 	@GetMapping("/users/location")
 	@ResponseBody
-	List<User> usersByLocation(@RequestParam(name = "location", required = false, defaultValue = "USA") String location) {
+	List<User> usersByLocation(@RequestParam(name = "location", required = true) String location) {
 
 		return userRepository.findByLocation(location);
 	}
@@ -84,6 +85,7 @@ public class UserController {
 	
 	// edit only what makes sense
 	@PutMapping("/users/edit/{id}")
+	@ResponseBody
 	User editUser(@RequestParam(name = "location", required = false, defaultValue = "") String location,
 		@RequestParam(name = "desc", required = false, defaultValue = "") String userAboutMe,
 		@PathVariable Long id) {
@@ -95,7 +97,7 @@ public class UserController {
 			    		user.setUserLocation(location);
 			    	user.setUserAboutMe(userAboutMe);
 			        return userRepository.save(user);
-			    }).orElseThrow(() -> new UserNotFoundException(id));
+			    }).orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND, id));
 	}
 	
 	// delete existing user
@@ -105,7 +107,7 @@ public class UserController {
 			userRepository.deleteById(id);
 		}
 		catch (Exception e) {
-			throw new UserNotFoundException(id);
+			throw new UserNotFoundException(HttpStatus.NOT_FOUND, id);
 		}
 	}
 }
