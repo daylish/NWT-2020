@@ -20,26 +20,21 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 // used to render an HTTP 404
-@RestControllerAdvice
+@ControllerAdvice
 public class StatusCodeAdvice extends ResponseEntityExceptionHandler {
 	
-	//@ResponseBody
-	/*
+	
+	// passing id of non-existent user handler
 	@ExceptionHandler(UserNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
-	public UserNotFoundException userNotFoundHandler(UserNotFoundException ex) {
-		return ex;
-		//return ResponseEntity.status(ex.getHttpStatus()).body(ex.getMessage());
-		//return new ResponseEntity<Object>(ex, ex.getHttpStatus());
+	protected ResponseEntity<Object> handleUserNotFound(UserNotFoundException ex) {
+
+		String error = "No user with that id found.";
+
+		ApiError apiError = 
+			      new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
-	
-	@ResponseBody
-	@ExceptionHandler(InvalidParametersException.class)
-	@ResponseStatus(HttpStatus.PRECONDITION_FAILED)
-	public String invalidParametersHandler(InvalidParametersException ex) {
-		return ex.getMessage();
-	}
-	*/
 	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
@@ -92,7 +87,7 @@ public class StatusCodeAdvice extends ResponseEntityExceptionHandler {
 	    return new ResponseEntity<Object>(
 	      apiError, new HttpHeaders(), apiError.getStatus());
 	}
-	
+		
 	// fall-back handler
 	@ExceptionHandler({ Exception.class })
 	public ResponseEntity<Object> handleAll(Exception ex, WebRequest request) {

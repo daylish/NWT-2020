@@ -32,7 +32,7 @@ public class UserController {
 	// fetch user by id
 	@GetMapping("/users/{id}")
 	@ResponseBody
-	User userById(@PathVariable Long id) {
+	User userById(@PathVariable Long id) throws UserNotFoundException {
 
 	  return userRepository.findById(id)
 			  .orElseThrow(() -> new UserNotFoundException(HttpStatus.NOT_FOUND, id));
@@ -88,7 +88,7 @@ public class UserController {
 	@ResponseBody
 	User editUser(@RequestParam(name = "location", required = false, defaultValue = "") String location,
 		@RequestParam(name = "desc", required = false, defaultValue = "") String userAboutMe,
-		@PathVariable Long id) {
+		@PathVariable Long id) throws UserNotFoundException {
 
 		return userRepository.findById(id)
 			    .map(user -> {
@@ -102,7 +102,7 @@ public class UserController {
 	
 	// delete existing user
 	@DeleteMapping("/users/delete/{id}")
-	void deleteUser(@PathVariable Long id) {
+	void deleteUser(@PathVariable Long id) throws UserNotFoundException {
 		try {
 			userRepository.deleteById(id);
 		}
