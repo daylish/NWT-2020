@@ -1,8 +1,29 @@
 package etf.nwt.usermicroservice;
 
-public class UserNotFoundException extends RuntimeException {
+import org.springframework.http.HttpStatus;
+
+public class UserNotFoundException extends Exception {
 	
-	UserNotFoundException(Long id) {
-		super("Could not find user with id " + id);
+    private HttpStatus httpStatus = HttpStatus.INTERNAL_SERVER_ERROR;
+    private Long id;
+	
+	UserNotFoundException(HttpStatus httpStatus, Long id) {
+		// super("Could not find user with id " + id);
+		this.id = id;
+        this.httpStatus = httpStatus;
 	}
+	
+    public HttpStatus getHttpStatus() {
+        return httpStatus;
+    }
+    
+    @Override
+    public String getLocalizedMessage() {
+    	return "User with id " + id.toString() + " not found.";
+    }
+    
+    @Override
+    public synchronized Throwable fillInStackTrace() {
+        return this;
+    }
 }
