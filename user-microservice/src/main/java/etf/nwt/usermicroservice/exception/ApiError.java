@@ -1,4 +1,4 @@
-package etf.nwt.usermicroservice;
+package etf.nwt.usermicroservice.exception;
 
 import java.util.Arrays;
 import java.util.List;

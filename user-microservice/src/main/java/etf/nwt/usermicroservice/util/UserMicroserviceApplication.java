@@ -1,4 +1,4 @@
-package etf.nwt.usermicroservice;
+package etf.nwt.usermicroservice.util;
 
 import java.util.logging.Logger;
 
@@ -7,8 +7,13 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+
+import etf.nwt.usermicroservice.model.User;
+import etf.nwt.usermicroservice.repository.UserRepository;
 
 @SpringBootApplication
+@ComponentScan("etf.nwt.usermicroservice.*")
 public class UserMicroserviceApplication {
 	
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserMicroserviceApplication.class);

@@ -1,4 +1,4 @@
-package etf.nwt.usermicroservice;
+package etf.nwt.usermicroservice.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import javax.validation.constraints.*;
+
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -46,6 +48,7 @@ public class User {
 	
 	@Size(min = 0, max = 200, message 
 		      = "About Me must be under 200 characters")
+	@NotNull
 	private String userAboutMe;
 	
 	// not used anywhere

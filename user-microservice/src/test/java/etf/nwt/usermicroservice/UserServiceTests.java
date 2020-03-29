@@ -11,6 +11,8 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import etf.nwt.usermicroservice.model.User;
+
 public class UserServiceTests extends AbstractTest {
 	
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(UserMicroserviceApplicationTests.class);
