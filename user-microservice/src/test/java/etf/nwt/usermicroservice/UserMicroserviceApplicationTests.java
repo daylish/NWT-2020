@@ -32,6 +32,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import etf.nwt.usermicroservice.controller.UserController;
+
 // ya this one was a failure
 @SpringBootTest
 @RunWith(SpringJUnit4ClassRunner.class)

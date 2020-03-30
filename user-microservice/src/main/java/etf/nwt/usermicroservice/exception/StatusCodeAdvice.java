@@ -1,4 +1,4 @@
-package etf.nwt.usermicroservice;
+package etf.nwt.usermicroservice.exception;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,18 @@ public class StatusCodeAdvice extends ResponseEntityExceptionHandler {
 
 		ApiError apiError = 
 			      new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	
+	// wrong parameters when creating user
+	@ExceptionHandler(InvalidParametersException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	protected ResponseEntity<Object> handleInvalidParameters(InvalidParametersException ex) {
+
+		String error = "Invalid parameters for creating new user.";
+
+		ApiError apiError = 
+				     new ApiError(HttpStatus.PRECONDITION_FAILED, ex.getLocalizedMessage(), error);
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 	
