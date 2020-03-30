@@ -1,4 +1,4 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.model;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;

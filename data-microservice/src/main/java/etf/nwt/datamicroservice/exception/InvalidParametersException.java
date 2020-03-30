@@ -1,8 +1,8 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.exception;
 
 public class InvalidParametersException extends RuntimeException {
 	
-	InvalidParametersException(String message) {
+	public InvalidParametersException(String message) {
 		super("Invalid request parameters for " + message);
 	}
 }

@@ -1,4 +1,4 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

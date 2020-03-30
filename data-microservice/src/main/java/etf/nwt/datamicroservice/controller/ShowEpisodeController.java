@@ -1,4 +1,4 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import etf.nwt.datamicroservice.exception.ShowNotFoundException;
+import etf.nwt.datamicroservice.model.ShowEpisode;
+import etf.nwt.datamicroservice.repository.ShowEpisodeRepository;
+import etf.nwt.datamicroservice.repository.ShowRepository;
 
 @RestController
 public class ShowEpisodeController {

@@ -1,4 +1,4 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.util;
 
 import java.util.logging.Logger;
 
@@ -7,8 +7,19 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+
+import etf.nwt.datamicroservice.model.Movie;
+import etf.nwt.datamicroservice.model.Review;
+import etf.nwt.datamicroservice.model.Show;
+import etf.nwt.datamicroservice.model.ShowEpisode;
+import etf.nwt.datamicroservice.repository.MovieRepository;
+import etf.nwt.datamicroservice.repository.ReviewRepository;
+import etf.nwt.datamicroservice.repository.ShowEpisodeRepository;
+import etf.nwt.datamicroservice.repository.ShowRepository;
 
 @SpringBootApplication
+@ComponentScan("etf.nwt.datamicroservice.*")
 public class DataMicroserviceApplication {
 	
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataMicroserviceApplication.class);

@@ -1,8 +1,8 @@
-package etf.nwt.datamicroservice;
+package etf.nwt.datamicroservice.model;
 
 import java.util.List;
 
-import javax.persistence.ElementCollection;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,24 +15,20 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Show {
+public class Movie {
 	
 	@Id
+	@NotNull
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private Long showID;
+	private Long movieID;
 	
 	@NotBlank
 	@NotNull(message = "Title cannot be null.")
 	private String title;
 	
-	//@NotNull
-	// thought about @Min(1) but it'd cause problems
-	// doesn't need to exist cause it can just be the size of episodes list
-	// private int episodeCount;
-	
 	//@Size(min = 50, max = 300, message 
 	//	      = "Description must be between 50 and 300 characters")
-	// commented out for testing
+	// commented out for testing purposes
 	private String description;
 	
 	@NotBlank
@@ -45,72 +41,60 @@ public class Show {
     @Max(2020)
 	private int year;
 	
-	@OneToMany(targetEntity = ShowEpisode.class, mappedBy = "show")
-	private List<ShowEpisode> episodes;
+	@OneToMany(targetEntity = Review.class, mappedBy = "movie")
+	private List<Review> reviews;
 	
-	/*
-	@ElementCollection
-	private List<ShowEpisode> episodes;
-	*/
-	
-	// constructors, setters, getters
-	public Show() {
-		
-	}
-	
-	public Show(String title, String description, String genre, int year) {
+	// not used anywhere
+	protected Movie() {}
+
+	public Movie(String title, String description, String genre, int year) {
 		this.title = title;
 		this.description = description;
 		this.genre = genre;
 		this.year = year;
+		// reviews list is empty on creation
 	}
 	
-	public Long getShowId() {
-		return showID;
+	@Override
+	public String toString() {
+	    return String.format(
+	        "Movie[id=%d, title='%s', description='%s', genre='%s', year=%d]",
+	        movieID, title, description, genre, year);
+	}
+	
+	public Long getMovieId() {
+	    return movieID;
 	}
 	
 	public String getTitle() {
-		return title;
+	    return title;
 	}
 	
-	public void setTitle(String title) {
-		this.title = title;
-	}
-	/*
-	public int getEpisodeCount() {
-		return episodeCount;
-	}
-	
-	public void setEpisodeCount(int episodeCount) {
-		this.episodeCount = episodeCount;
-	}
-	*/
 	public String getDescription() {
-		return description;
+	    return description;
 	}
 	
 	public void setDescription(String description) {
-		this.description = description;
+	    this.description = description;
 	}
 	
 	public String getGenre() {
-		return genre;
+	    return genre;
 	}
 	
 	public void setGenre(String genre) {
-		this.genre = genre;
+	    this.genre = genre;
 	}
 	
 	public int getYear() {
-		return year;
+	    return year;
 	}
 	
 	public void setYear(int year) {
-		this.year = year;
+	    this.year = year;
 	}
 	
-	// now they'll show up in get requests
-	public List<ShowEpisode> getEpisodes() {
-		return episodes;
+	public List<Review> getReviews() {
+		return reviews;
 	}
 }
