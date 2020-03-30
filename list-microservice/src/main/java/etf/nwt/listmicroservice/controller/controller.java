@@ -45,7 +45,7 @@ public class Controller {
     @PostMapping("/lists/new")
     public ResponseEntity<?> createList(@RequestBody Lista lista) {
         listaServis.createList(lista);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
     
     @GetMapping("/listItems/{listId}")
@@ -72,7 +72,7 @@ public class Controller {
         }
 
         listaServis.addListItemToList(listId, li);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("lists/delete/{listId}")

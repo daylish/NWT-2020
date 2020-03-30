@@ -48,7 +48,7 @@ public class Controller {
     @PostMapping("/platforms/new")
     public ResponseEntity<?> addPlatform(@RequestBody Platform platform) {
         streamService.addPlatform(platform);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @PostMapping("/platforms/{platformId}/new")
@@ -62,7 +62,7 @@ public class Controller {
         }
 
         streamService.addStream(platformId, stream);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @DeleteMapping("/platforms/delete/{platformId}")
