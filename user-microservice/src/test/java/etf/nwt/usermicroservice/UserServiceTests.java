@@ -35,7 +35,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// adding a new user
 	@Test
-	@Order(1)
 	public void testA_addUserTest() throws Exception {
 	    String uri = "/users/new";
 	    User user = new User("dgickons4", "tfatte6@cmu.edu", "Canada");
@@ -54,7 +53,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// fetching all users
 	@Test
-	@Order(2)
 	public void testB_getUsersTest() throws Exception {
 		String uri = "/users";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
@@ -71,7 +69,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// fetching user by specific id
 	@Test
-	@Order(3)
 	public void testC_getUserByIdTest() throws Exception {
 		String uri = "/users/1";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
@@ -86,7 +83,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// fetching user by non-existent id
 	@Test
-	@Order(4)
 	public void testD_getUserByIdTest_fails() throws Exception {
 		String uri = "/users/10";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
@@ -101,7 +97,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// fetching users by location
 	@Test
-	@Order(5)
 	public void testE_getUsersByLocationTest() throws Exception {
 	    String uri = "/users/location?location=USA";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.get(uri)
@@ -119,7 +114,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// adding a new user but it fails
 	@Test
-	@Order(6)
 	public void testF_addUserTest_fails() throws Exception {
 	    String uri = "/users/new";
 	    User user = new User("dgickons5", "notanemail", "Mexico");
@@ -138,7 +132,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// deleting existing user
 	@Test
-	@Order(7)
 	public void testG_deleteUserTest() throws Exception {
 	    String uri = "/users/delete/1";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete(uri)
@@ -154,7 +147,6 @@ public class UserServiceTests extends AbstractTest {
 	// deleting user by non-existent id
 	// deleting existing user
 	@Test
-	@Order(8)
 	public void testH_deleteUserTest_fails() throws Exception {
 	    String uri = "/users/delete/10";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.delete(uri)
@@ -169,7 +161,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// editing non-existent user
 	@Test
-	@Order(9)
 	public void testI_editUserTest_fails() throws Exception {
 	    String uri = "/users/edit/10";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)
@@ -184,7 +175,6 @@ public class UserServiceTests extends AbstractTest {
 	
 	// editing existing user
 	@Test
-	@Order(10)
 	public void testJ_editUserTest() throws Exception {
 	    String uri = "/users/edit/2?desc=TEST DESCRIPTION";
 	    MvcResult mvcResult = mvc.perform(MockMvcRequestBuilders.put(uri)

@@ -48,7 +48,7 @@ public class MovieController {
 	// create new movie
 	@PostMapping("/movies/new")
 	@ResponseBody
-	Movie newMovie(@RequestBody Movie newMovie) {
+	Movie newMovie(@RequestBody Movie newMovie) throws InvalidParametersException {
 		try {
 			movieRepository.save(newMovie);
 		}

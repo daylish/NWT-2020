@@ -38,7 +38,7 @@ public class StatusCodeAdvice extends ResponseEntityExceptionHandler {
 	
 	// wrong parameters when creating user
 	@ExceptionHandler(InvalidParametersException.class)
-	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ResponseStatus(HttpStatus.PRECONDITION_FAILED)
 	protected ResponseEntity<Object> handleInvalidParameters(InvalidParametersException ex) {
 
 		String error = "Invalid parameters for creating new user.";

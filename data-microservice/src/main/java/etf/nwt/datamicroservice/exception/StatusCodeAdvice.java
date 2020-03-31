@@ -58,6 +58,30 @@ public class StatusCodeAdvice extends ResponseEntityExceptionHandler {
 		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
 	}
 	
+	// passing id of non-existent show handler
+	@ExceptionHandler(ShowNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	protected ResponseEntity<Object> handleShowNotFound(ShowNotFoundException ex) {
+
+		String error = "No show with that id found.";
+
+		ApiError apiError = 
+				 	new ApiError(HttpStatus.NOT_FOUND, ex.getLocalizedMessage(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	
+	// wrong parameters when creating movie/show
+	@ExceptionHandler(InvalidParametersException.class)
+	@ResponseStatus(HttpStatus.PRECONDITION_FAILED)
+	protected ResponseEntity<Object> handleInvalidParameters(InvalidParametersException ex) {
+
+		String error = "Invalid parameters for creating new movie/show.";
+
+		ApiError apiError = 
+				     new ApiError(HttpStatus.PRECONDITION_FAILED, ex.getLocalizedMessage(), error);
+		return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+	}
+	
 	@Override
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(
 	  MethodArgumentNotValidException ex, 

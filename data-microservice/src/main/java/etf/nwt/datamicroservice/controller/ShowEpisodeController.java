@@ -31,9 +31,9 @@ public class ShowEpisodeController {
 	// fetch episodes by show id
 	@GetMapping("/shows/{id}/episodes")
 	@ResponseBody
-	List<ShowEpisode> episodesForShow(@PathVariable Long id) {
+	List<ShowEpisode> episodesForShow(@PathVariable Long id) throws ShowNotFoundException {
 		try {
-			showRepository.findById(id);
+			//showRepository.findById(id);
 			return showEpisodeRepository.findByContent(id);
 		}
 		catch (Exception e) {

@@ -2,6 +2,7 @@ package etf.nwt.datamicroservice.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,7 +42,7 @@ public class Movie {
     @Max(2020)
 	private int year;
 	
-	@OneToMany(targetEntity = Review.class, mappedBy = "movie")
+	@OneToMany(cascade = CascadeType.REMOVE, targetEntity = Review.class, mappedBy = "movie")
 	private List<Review> reviews;
 	
 	// not used anywhere

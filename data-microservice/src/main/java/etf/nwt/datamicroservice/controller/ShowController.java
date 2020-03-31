@@ -36,15 +36,15 @@ public class ShowController {
 	// fetch show by id
 	@GetMapping("/shows/{id}")
 	@ResponseBody
-	Show showById(@PathVariable Long id) {
+	Show showById(@PathVariable Long id) throws ShowNotFoundException {
 		return showRepository.findById(id)
 			.orElseThrow(() -> new ShowNotFoundException(id));
 	}
 	
 	// create new show
-	@PostMapping("/show/new")
+	@PostMapping("/shows/new")
 	@ResponseBody
-	Show newShow(@RequestBody Show newShow) {
+	Show newShow(@RequestBody Show newShow) throws InvalidParametersException {
 		try {
 			showRepository.save(newShow);
 		}
@@ -60,7 +60,7 @@ public class ShowController {
 	@ResponseBody
 	Show editShow(@RequestParam(name = "genre", required = false, defaultValue = "") String genre,
 		@RequestParam(name = "description", required = false, defaultValue = "") String description,
-		@PathVariable Long id) {
+		@PathVariable Long id) throws ShowNotFoundException {
 
 			return showRepository.findById(id)
 					  .map(show -> {
@@ -74,7 +74,7 @@ public class ShowController {
 	
 	// delete existing show
 	@DeleteMapping("/shows/delete/{id}")
-	void deleteShow(@PathVariable Long id) {
+	void deleteShow(@PathVariable Long id) throws ShowNotFoundException {
 		try {
 			showRepository.deleteById(id);
 		}

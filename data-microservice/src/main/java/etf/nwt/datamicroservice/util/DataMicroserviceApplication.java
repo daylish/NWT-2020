@@ -19,7 +19,7 @@ import etf.nwt.datamicroservice.repository.ReviewRepository;
 import etf.nwt.datamicroservice.repository.ShowEpisodeRepository;
 import etf.nwt.datamicroservice.repository.ShowRepository;
 
-@EnableDiscoveryClient
+//@EnableDiscoveryClient
 @SpringBootApplication
 @ComponentScan("etf.nwt.datamicroservice.*")
 public class DataMicroserviceApplication {
