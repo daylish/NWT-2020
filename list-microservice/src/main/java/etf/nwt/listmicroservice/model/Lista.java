@@ -110,4 +110,15 @@ public class Lista {
 	        this.listID, this.title, this.date, this.userID);
 	}
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == this)
+            return true;
+        if (!(o instanceof Lista)) {
+            return false;
+        }
+        Lista lista = (Lista) o;
+        return Objects.equals(listID, lista.listID) && Objects.equals(userID, lista.userID) && Objects.equals(title, lista.title) && Objects.equals(date, lista.date);
+    }
+
 }

@@ -69,4 +69,15 @@ public class ListItem {
 	public int hashCode() {
 		return Objects.hash(listItemID);
 	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (o == this)
+			return true;
+		if (!(o instanceof ListItem)) {
+			return false;
+		}
+		ListItem listItem = (ListItem) o;
+		return Objects.equals(listItemID, listItem.listItemID) && Objects.equals(listItemStatus, listItem.listItemStatus) && Objects.equals(dateCreated, listItem.dateCreated) && Objects.equals(itemId, listItem.itemId);
+	}
 }
