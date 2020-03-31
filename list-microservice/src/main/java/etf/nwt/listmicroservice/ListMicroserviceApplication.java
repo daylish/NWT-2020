@@ -5,14 +5,18 @@ import java.util.Date;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 
 import etf.nwt.listmicroservice.model.ListItem;
 import etf.nwt.listmicroservice.model.Lista;
 import etf.nwt.listmicroservice.repositories.ListItemRepository;
 import etf.nwt.listmicroservice.repositories.ListaRepository;
 
+@EnableDiscoveryClient
 @SpringBootApplication
+@ComponentScan("etf.nwt.listmicroservice")
 public class ListMicroserviceApplication {
 	
 	public static void main(String[] args) {
