@@ -7,6 +7,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
@@ -19,7 +20,7 @@ import etf.nwt.datamicroservice.repository.ReviewRepository;
 import etf.nwt.datamicroservice.repository.ShowEpisodeRepository;
 import etf.nwt.datamicroservice.repository.ShowRepository;
 
-//@EnableDiscoveryClient
+@EnableEurekaClient 
 @SpringBootApplication
 @ComponentScan("etf.nwt.datamicroservice.*")
 public class DataMicroserviceApplication {
