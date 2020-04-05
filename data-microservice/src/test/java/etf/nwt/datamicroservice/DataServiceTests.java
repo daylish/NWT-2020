@@ -9,17 +9,29 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import com.netflix.discovery.EurekaClient;
 
 import etf.nwt.datamicroservice.model.Movie;
 import etf.nwt.datamicroservice.model.Show;
 
 // it means the tests get called in alphabetical order 
+@TestPropertySource(locations="classpath:communication.properties")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DataServiceTests extends AbstractTest {
 	private static final org.slf4j.Logger log = LoggerFactory.getLogger(DataMicroserviceApplicationTests.class);
+	
+	@Autowired
+	private EurekaClient eurekaClient;
+	
+    @Value("${service.user}")
+    private String userServiceID;
 
 	@Override
 	@Before

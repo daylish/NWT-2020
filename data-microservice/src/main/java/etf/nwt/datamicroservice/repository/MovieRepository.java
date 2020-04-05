@@ -17,4 +17,5 @@ public interface MovieRepository extends JpaRepository<Movie, Long> {
 	Movie findByTitle(@Param("title") String title);
 	Movie findById(@Param("id") long id);
 	List<Movie> findByGenre(@Param("genre") String genre);
+	List<Movie> findByCreatorID(@Param("creatorID") Long id);
 }

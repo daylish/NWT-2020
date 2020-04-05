@@ -49,6 +49,8 @@ public class Show {
 	@OneToMany(cascade = CascadeType.REMOVE, targetEntity = ShowEpisode.class, mappedBy = "show")
 	private List<ShowEpisode> episodes;
 	
+	private Long creatorID;
+	
 	/*
 	@ElementCollection
 	private List<ShowEpisode> episodes;
@@ -113,5 +115,13 @@ public class Show {
 	// now they'll show up in get requests
 	public List<ShowEpisode> getEpisodes() {
 		return episodes;
+	}
+	
+	public Long getCreatorId() {
+		return creatorID;
+	}
+	
+	public void setCreatorId(Long id) {
+		this.creatorID = id;
 	}
 }

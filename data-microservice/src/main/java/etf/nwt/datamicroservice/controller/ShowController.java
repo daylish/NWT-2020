@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import etf.nwt.datamicroservice.exception.InvalidParametersException;
 import etf.nwt.datamicroservice.exception.ShowNotFoundException;
+import etf.nwt.datamicroservice.model.Movie;
 import etf.nwt.datamicroservice.model.Show;
 import etf.nwt.datamicroservice.repository.ShowRepository;
 
@@ -55,6 +56,26 @@ public class ShowController {
 		return newShow;
 	}
 	
+	// new movie by params
+	// the path is dumb but w/e
+	@PostMapping("/shows/newp")
+	@ResponseBody
+	Show newShowP(@RequestParam(name="title", required = true) String title,
+			@RequestParam(name = "description", required = true) String description,
+			@RequestParam(name = "genre", required = true) String genre,
+			@RequestParam(name = "year", required = true) int year,
+			@RequestParam(name = "creatorID", required = false) Long creatorID) throws InvalidParametersException {
+		try {
+			Show newShow = new Show(title, description, genre, year);
+			newShow.setCreatorId(creatorID);
+			showRepository.save(newShow);
+			return newShow;
+		}
+		catch (Exception e) {
+			throw new InvalidParametersException("creating new show");
+		}
+	}
+	
 	// edit only what makes sense
 	@PutMapping("/shows/edit/{id}")
 	@ResponseBody
@@ -81,5 +102,12 @@ public class ShowController {
 		catch (Exception e) {
 			throw new ShowNotFoundException(id);
 		}
+	}
+	
+	// fetch shows created by certain user
+	@GetMapping("/shows/creator/{id}")
+	@ResponseBody
+	List<Show> getShowsByCreatorId(@PathVariable Long id) {
+		return showRepository.findByCreatorID(id);
 	}
 }

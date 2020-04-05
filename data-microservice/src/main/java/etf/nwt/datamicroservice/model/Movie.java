@@ -45,6 +45,8 @@ public class Movie {
 	@OneToMany(cascade = CascadeType.REMOVE, targetEntity = Review.class, mappedBy = "movie")
 	private List<Review> reviews;
 	
+	private Long creatorID;
+	
 	// not used anywhere
 	protected Movie() {}
 
@@ -97,5 +99,13 @@ public class Movie {
 	
 	public List<Review> getReviews() {
 		return reviews;
+	}
+	
+	public Long getCreatorId() {
+		return creatorID;
+	}
+	
+	public void setCreatorId(Long id) {
+		this.creatorID = id;
 	}
 }
