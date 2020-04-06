@@ -52,6 +52,8 @@ public class Review {
 	@NotBlank
 	private String reviewDate;
 	
+	private Long creatorID;
+	
 	// not used anywhere
 	public Review() {
 		
@@ -81,5 +83,17 @@ public class Review {
 	
 	public String getReviewDate() {
 		return reviewDate;
+	}
+	
+	public Long getCreatorId() {
+		return creatorID;
+	}
+	
+	public void setCreatorId(Long id) {
+		this.creatorID = id;
+	}
+	
+	public Long getMovieId() {
+		return content;
 	}
 }

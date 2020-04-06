@@ -16,4 +16,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 	List<Review> findAll();
 	List<Review> findByMovie(@Param("item") long id);
 	List<Review> findByContent(@Param("content") long id);
+	List<Review> findByCreatorID(@Param("creatorID") long id);
 }

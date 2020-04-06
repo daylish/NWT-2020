@@ -243,4 +243,46 @@ public class UserServiceTests extends AbstractTest {
 	    assertEquals(HttpStatus.OK, response.getStatusCode());
 	    log.info("Get movies for user content is: " + response.getBody());
 	}
+	
+	// adding review test
+	@Test
+	public void testM_addReviewByUserTest() throws Exception {
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "reviews/movie/1/new";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("text", "This is a test review smile");
+        map.add("creatorID", "1");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		TestRestTemplate testRestTemplate = new TestRestTemplate();
+		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
+	    assertEquals(HttpStatus.OK, response.getStatusCode());
+	}
+	
+	@Test
+	public void testN_addReviewByUserTest_fails() throws Exception {
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "reviews/movie/1/new";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("ayaya", "This is a test review smile");
+        map.add("creatorID", "1");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		TestRestTemplate testRestTemplate = new TestRestTemplate();
+		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
+		// bad request cause the parameter isn't named appropriately :)
+	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
 }

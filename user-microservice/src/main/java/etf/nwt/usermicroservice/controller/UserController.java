@@ -233,6 +233,7 @@ public class UserController {
         return movies;
 	}
 	
+	// get user's created shows
 	@GetMapping("/users/{id}/shows")
 	@ResponseBody
 	Object[] getShowsCreatedByUser(@PathVariable Long id) {
@@ -243,5 +244,46 @@ public class UserController {
         RestTemplate restTemplate = new RestTemplate();
         Object[] shows = restTemplate.getForObject(url, Object[].class);
         return shows;
+	}
+	
+	// get user's reviews
+	@GetMapping("/users/{id}/reviews")
+	@ResponseBody
+	Object[] getReviewsCreatedByUser(@PathVariable Long id) {
+
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "reviews/creator/" + id.toString();
+        RestTemplate restTemplate = new RestTemplate();
+        Object[] reviews = restTemplate.getForObject(url, Object[].class);
+        return reviews;
+	}
+	
+	// add new review
+	@PostMapping("users/{id}/movies/{movieID}/reviews/new") 
+	@ResponseBody
+	Object addReviewByUser(@PathVariable Long id, @PathVariable Long movieID, 
+			@RequestParam(name = "text", required = true) String text) throws InvalidParametersException {
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "reviews/movie/" + movieID.toString() + "/new";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("text", text);
+        map.add("creatorID", id.toString());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            Object review = restTemplate.postForObject(url, request, Object.class);
+            return review;
+        }
+        catch (Exception e) {
+        	// if (e instanceof InvalidParametersException)
+        	throw new InvalidParametersException("adding new review", HttpStatus.PRECONDITION_FAILED);
+        }
 	}
 }
