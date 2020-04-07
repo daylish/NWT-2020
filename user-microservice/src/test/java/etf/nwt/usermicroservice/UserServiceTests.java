@@ -212,7 +212,7 @@ public class UserServiceTests extends AbstractTest {
 	public void testK_addMovieByUserTest() throws Exception {
 		Application application = eurekaClient.getApplication(dataServiceID);
         InstanceInfo instanceInfo = application.getInstances().get(0);
-        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newp";
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newpc";
         
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
@@ -284,5 +284,28 @@ public class UserServiceTests extends AbstractTest {
 		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
 		// bad request cause the parameter isn't named appropriately :)
 	    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+	}
+	
+	@Test
+	public void testO_addMovieByUserTest_fails() throws Exception {
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newpc";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("title", "The Rock and a Hard Place");
+        map.add("description", "The Rock is cool and also funny");
+        map.add("genre", "Action");
+        map.add("year", "2009");
+        map.add("creatorID", "5");
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+
+		TestRestTemplate testRestTemplate = new TestRestTemplate();
+		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
+	    assertEquals(HttpStatus.PRECONDITION_FAILED, response.getStatusCode());
 	}
 }

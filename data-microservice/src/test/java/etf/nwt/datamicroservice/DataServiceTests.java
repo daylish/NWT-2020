@@ -283,5 +283,4 @@ public class DataServiceTests extends AbstractTest {
 	    String content = mvcResult.getResponse().getContentAsString();
 	    log.info("Edit review for movie content is: " + content);
 	}
-
 }
