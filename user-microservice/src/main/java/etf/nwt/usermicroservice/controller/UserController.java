@@ -161,7 +161,7 @@ public class UserController {
 		// fetching relevant data from eureka
 		Application application = eurekaClient.getApplication(dataServiceID);
         InstanceInfo instanceInfo = application.getInstances().get(0);
-        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newp";
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newpc";
         //System.out.println("URL: " + url);
         
         HttpHeaders headers = new HttpHeaders();
@@ -286,4 +286,6 @@ public class UserController {
         	throw new InvalidParametersException("adding new review", HttpStatus.PRECONDITION_FAILED);
         }
 	}
+	
+	// adding and fetching lists
 }

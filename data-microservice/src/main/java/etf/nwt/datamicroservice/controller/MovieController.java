@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -82,7 +83,7 @@ public class MovieController {
 	// the path is dumb but w/e
 	@PostMapping("/movies/newp")
 	@ResponseBody
-	Movie newMovieP(@RequestParam(name="title", required = true) String title,
+	Movie newMovieParameters(@RequestParam(name="title", required = true) String title,
 			@RequestParam(name = "description", required = true) String description,
 			@RequestParam(name = "genre", required = true) String genre,
 			@RequestParam(name = "year", required = true) int year,
@@ -134,11 +135,40 @@ public class MovieController {
 	}
 	
 	/* COMMUNICATION */
+	// terrible path but :)))
+	@PostMapping("/movies/newpc")
+	@ResponseBody
+	Movie newMovieParametersControl(@RequestParam(name="title", required = true) String title,
+			@RequestParam(name = "description", required = true) String description,
+			@RequestParam(name = "genre", required = true) String genre,
+			@RequestParam(name = "year", required = true) int year,
+			@RequestParam(name = "creatorID", required = false) Long creatorID) throws InvalidParametersException {
+		try {
+			// checking if said user exists
+			Application application = eurekaClient.getApplication(userServiceID);
+	        InstanceInfo instanceInfo = application.getInstances().get(0);
+	        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "users/" + creatorID.toString();
+	        
+	        RestTemplate restTemplate = new RestTemplate();
+	        ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+	        
+	        if (response.getStatusCode().equals(HttpStatus.OK)) {
+	        	// adding movie
+				Movie newMovie = new Movie(title, description, genre, year);
+				newMovie.setCreatorId(creatorID);
+				movieRepository.save(newMovie);
+				return newMovie;
+	        }
+	        else throw new InvalidParametersException("creating new movie");
+		}
+		catch (Exception e) {
+			throw new InvalidParametersException("creating new movie");
+		}
+	}
 	
 	// i don't even know?? get all users that added a movie??
 	// for now just trying to get all users via this i guess
 	// this is useless and wild and just for testing for now :) 
-	// but it works!!!! it's not useful at all but i kinda get it!!!!!!!
 	/*
     @GetMapping("/movies/users")
     @ResponseBody
