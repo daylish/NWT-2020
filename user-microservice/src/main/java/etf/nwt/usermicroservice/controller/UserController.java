@@ -1,6 +1,7 @@
 package etf.nwt.usermicroservice.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -35,6 +37,7 @@ import etf.nwt.usermicroservice.exception.InvalidParametersException;
 import etf.nwt.usermicroservice.exception.UserNotFoundException;
 import etf.nwt.usermicroservice.model.User;
 import etf.nwt.usermicroservice.repository.UserRepository;
+import net.minidev.json.JSONObject;
 
 @EnableJpaRepositories("etf.nwt.usermicroservice.repository")
 @EntityScan("etf.nwt.usermicroservice.model")
@@ -49,7 +52,10 @@ public class UserController {
 	private EurekaClient eurekaClient;
     
     @Value("${service.data}")
-    private String dataServiceID;
+	private String dataServiceID;
+	
+	@Value("${service.list}")
+	private String listServiceId;
 	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
@@ -285,5 +291,27 @@ public class UserController {
         	// if (e instanceof InvalidParametersException)
         	throw new InvalidParametersException("adding new review", HttpStatus.PRECONDITION_FAILED);
         }
+	}
+
+	//SINHRONA KOMUNIKACIJA SA LIST SERVISOM
+	@PostMapping(value="/users/{userId}/lists/new")
+	public ResponseEntity<?> createListByUser(@PathVariable("userId") Long userId, @RequestBody JSONObject lista) {
+		
+		Application app = eurekaClient.getApplication(listServiceId);
+		InstanceInfo instanceInfo = app.getInstances().get(0);
+		String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/lists/new";
+
+		lista.put("userId", userId);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpEntity<Map<String, Object>> req = new HttpEntity<>(lista, headers);
+
+		RestTemplate rt = new RestTemplate();
+		
+		ResponseEntity<?> res = rt.postForEntity(url, req, ResponseEntity.class);
+
+		return res;
 	}
 }
