@@ -54,8 +54,7 @@ public class UserController {
     @Value("${service.data}")
 	private String dataServiceID;
 	
-	@Value("${service.list}")
-	private String listServiceId;
+	private String listServiceId = "LIST-MICROSERVICE";
 	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
@@ -298,19 +297,18 @@ public class UserController {
 	public ResponseEntity<?> createListByUser(@PathVariable("userId") Long userId, @RequestBody JSONObject lista) {
 		
 		Application app = eurekaClient.getApplication(listServiceId);
-		InstanceInfo instanceInfo = app.getInstances().get(0);
+		InstanceInfo instanceInfo = app.getInstances().get(0); 
 		String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/lists/new";
-
-		lista.put("userId", userId);
-
+		
+		lista.put("userID", userId);
+		
 		HttpHeaders headers = new HttpHeaders();
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		HttpEntity<Map<String, Object>> req = new HttpEntity<>(lista, headers);
-
+		HttpEntity<String> req = new HttpEntity<String>(lista.toString(), headers);
 		RestTemplate rt = new RestTemplate();
 		
-		ResponseEntity<?> res = rt.postForEntity(url, req, ResponseEntity.class);
+		ResponseEntity<?> res = rt.postForEntity(url, req, Object.class);
 
 		return res;
 	}
