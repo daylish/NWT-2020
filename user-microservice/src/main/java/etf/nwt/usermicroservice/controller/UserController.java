@@ -41,7 +41,7 @@ import net.minidev.json.JSONObject;
 
 @EnableJpaRepositories("etf.nwt.usermicroservice.repository")
 @EntityScan("etf.nwt.usermicroservice.model")
-@PropertySource(value = "communication.properties", ignoreResourceNotFound = true)
+@PropertySource(value = "classpath:communication.properties", ignoreResourceNotFound = true)
 @EnableAutoConfiguration
 @RestController
 public class UserController {
@@ -54,7 +54,12 @@ public class UserController {
     @Value("${service.data}")
 	private String dataServiceID;
 	
+<<<<<<< HEAD
 	private String listServiceId = "LIST-MICROSERVICE";
+=======
+	@Value("${service.list}")
+	private String listServiceID;
+>>>>>>> ae14aba760de50fc3b2e7e2f8701c776425658a3
 	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
@@ -296,8 +301,8 @@ public class UserController {
 	@PostMapping(value="/users/{userId}/lists/new")
 	public ResponseEntity<?> createListByUser(@PathVariable("userId") Long userId, @RequestBody JSONObject lista) {
 		
-		Application app = eurekaClient.getApplication(listServiceId);
-		InstanceInfo instanceInfo = app.getInstances().get(0); 
+		Application app = eurekaClient.getApplication("list-microservice");
+		InstanceInfo instanceInfo = app.getInstances().get(0);
 		String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/lists/new";
 		
 		lista.put("userID", userId);

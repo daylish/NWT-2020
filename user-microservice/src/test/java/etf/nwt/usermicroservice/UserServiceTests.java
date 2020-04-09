@@ -3,6 +3,8 @@ package etf.nwt.usermicroservice;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.Map;
+
 import org.slf4j.LoggerFactory;
 
 import org.junit.Before;
@@ -33,6 +35,7 @@ import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 
 import etf.nwt.usermicroservice.model.User;
+import net.minidev.json.JSONObject;
 @TestPropertySource(locations="classpath:communication.properties")
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class UserServiceTests extends AbstractTest {
@@ -44,6 +47,9 @@ public class UserServiceTests extends AbstractTest {
 	
     @Value("${service.data}")
     private String dataServiceID;
+    
+    @Value("${service.list}")
+    private String listServiceID;
 
 	@Override
 	@Before
@@ -307,5 +313,49 @@ public class UserServiceTests extends AbstractTest {
 		TestRestTemplate testRestTemplate = new TestRestTemplate();
 		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
 	    assertEquals(HttpStatus.PRECONDITION_FAILED, response.getStatusCode());
+	}
+	
+	// adding list test
+	@Test
+	public void testP_addListByUserTest() throws Exception {
+		
+		Application application = eurekaClient.getApplication("list-microservice");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "lists/new";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject list = new JSONObject();
+        list.put("userID", 1);
+        list.put("title", "test list");
+        list.put("date", "2020-04-07T21:49:47.148+0000");
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(list, headers);
+
+		TestRestTemplate testRestTemplate = new TestRestTemplate();
+		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
+	    assertEquals(HttpStatus.CREATED, response.getStatusCode());
+	}
+	
+	@Test
+	public void testQ_addListByUserTest_fails() throws Exception {
+		
+		Application application = eurekaClient.getApplication("list-microservice");
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "lists/new";
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        JSONObject list = new JSONObject();
+        list.put("userID", 2);
+        // fails because of this
+        list.put("title", "");
+        list.put("date", "2020-04-07T21:49:47.148+0000");
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(list, headers);
+
+		TestRestTemplate testRestTemplate = new TestRestTemplate();
+		ResponseEntity<Object> response = testRestTemplate.postForEntity(url, request, Object.class);
+	    assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
 	}
 }
