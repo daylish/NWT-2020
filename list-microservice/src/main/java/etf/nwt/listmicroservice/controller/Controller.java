@@ -15,6 +15,7 @@ import etf.nwt.listmicroservice.model.ListItem;
 import etf.nwt.listmicroservice.model.Lista;
 import etf.nwt.listmicroservice.service.ListaServis;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -101,5 +102,25 @@ public class Controller {
 
         listaServis.deleteListItemFromList(listId, listItemId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("lists/edit/{listId}")
+    public ResponseEntity<?> updateList(@PathVariable("listId") Long listId, @RequestBody Lista l) {
+        return listaServis.updateList(listId, l);
+    }
+
+    @PutMapping("listItems/edit/{listItemId}")
+    public ResponseEntity<?> updateListItem(@PathVariable("listItemId") Long id, @RequestBody ListItem li) {
+        return listaServis.updateListItem(id, li);
+    }
+
+    @GetMapping("list/{listId}")
+    public ResponseEntity<?> getListById(@PathVariable("listId") Long id) {
+        return listaServis.getListById(id);
+    }
+
+    @GetMapping("listItem/{listItemId}")
+    public ResponseEntity<?> getListItemById(@PathVariable("listItemId") Long id) {
+        return listaServis.getListItemById(id);
     }
 }
