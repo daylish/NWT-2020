@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.ws.rs.OPTIONS;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +78,7 @@ public class ListaServis {
         } else {
             Map<String, String> body = new HashMap<String, String>();
             body.put("message", "Ne postoji lista sa tim ID-jem");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
         }
     }
 
@@ -97,7 +95,7 @@ public class ListaServis {
         } else {
             Map<String, String> body = new HashMap<String, String>();
             body.put("message", "Ne postoji list item sa tim ID-jem");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
         }
     }
 
@@ -109,7 +107,7 @@ public class ListaServis {
         } else {
             Map<String, String> body = new HashMap<String, String>();
             body.put("message", "Ne postoji lista sa tim ID-jem");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
         }
     }
 
@@ -121,7 +119,7 @@ public class ListaServis {
         } else {
             Map<String, String> body = new HashMap<String, String>();
             body.put("message", "Ne postoji list item sa tim ID-jem");
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(body);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(body);
         }
     }
 }

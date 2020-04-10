@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import etf.nwt.streammicroservice.model.Platform;
 import etf.nwt.streammicroservice.model.Stream;
 import etf.nwt.streammicroservice.service.StreamService;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 public class Controller {
@@ -91,5 +93,25 @@ public class Controller {
         
         streamService.deleteStream(platformId, streamId);
         return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("stream/edit/{id}")
+    public ResponseEntity<?> updateStream(@PathVariable("id") Long id, @RequestBody Stream s) {
+        return streamService.updateStream(id, s);
+    }
+
+    @PutMapping("platform/edit/{id}")
+    public ResponseEntity<?> updatePlatform(@PathVariable("id") Long id, @RequestBody Platform p) {
+        return streamService.updatePlatform(id, p);
+    }
+
+    @GetMapping("stream/{id}")
+    public ResponseEntity<?> getStreamById(@PathVariable("id") Long id) {
+        return streamService.getStreamById(id);
+    }
+
+    @GetMapping("platform/{id}")
+    public ResponseEntity<?> getPlatformById(@PathVariable("id") Long id) {
+        return streamService.getPlatformById(id);
     }
 }
