@@ -54,12 +54,11 @@ public class UserController {
     @Value("${service.data}")
 	private String dataServiceID;
 	
-<<<<<<< HEAD
 	private String listServiceId = "LIST-MICROSERVICE";
-=======
+	/*
 	@Value("${service.list}")
 	private String listServiceID;
->>>>>>> ae14aba760de50fc3b2e7e2f8701c776425658a3
+	*/
 	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
