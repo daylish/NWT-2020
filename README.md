@@ -4,6 +4,7 @@
 <br/>1.) Instalirana Java verzija(min 1.8)
 <br/>2.) Instaliran NodeJS
 <br/>3.) Instaliran Apache Maven
+<br/>4.) Instaliran PostgreSQL i pokrenut server
 <br/>
 <br/>Da bi pokrenuli aplikaciju potrebno je:
 <br/>1.) U terminalu pristupiti svim servisima (npr. cd C:/Users/user/Desktop/NWT-2020/list-microservice) i pokrenuti ih komandom mvn spring-boot:run
