@@ -13,6 +13,6 @@ message EventResponse {
 	string eventResponseText = 1;
 }
 
-service EventService {
+service EventsService {
 	rpc hello(EventRequest) returns (EventResponse);
 }
