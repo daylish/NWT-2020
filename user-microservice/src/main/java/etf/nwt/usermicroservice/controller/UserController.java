@@ -60,6 +60,8 @@ public class UserController {
 	private String listServiceID;
 	*/
 	
+	// gRPC stuff goes here maybe?
+	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
 	}
