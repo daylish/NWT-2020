@@ -2,11 +2,13 @@ syntax = "proto3";
 option java_multiple_files = true;
 package etf.nwt.systemevents;
 
+import "google/protobuf/timestamp.proto";
+
 //  timestamp akcije, naziv mikroservisa u kojem se akcija desila, user koji je pokrenuo akciju - možete dodati poslije,
 //  tip akcije - create, delete, get, update, naziv resursa nad kojim se dešava akcija,
 //  tip odgovora na akciju - uspješno završena akcija, greška.
 message EventRequest {
-    string actionTimestamp = 1;
+    google.protobuf.Timestamp actionTimestamp = 1;
     string serviceName = 2;
     int64 userId = 3;
     enum ActionType {
