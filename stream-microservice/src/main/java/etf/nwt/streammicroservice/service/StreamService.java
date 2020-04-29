@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import etf.nwt.systemevents.EventRequest;
+import etf.nwt.systemevents.EventResponse;
+import etf.nwt.systemevents.EventsServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +28,8 @@ public class StreamService {
 
     @Autowired
     private PlatformRepository platformRepository;
+
+    private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
 
     public List<Stream> getAllStreams() {
         return streamRepository.findAll();

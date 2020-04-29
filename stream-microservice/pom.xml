@@ -58,6 +58,25 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-netty-shaded</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-protobuf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.grpc</groupId>
+			<artifactId>grpc-stub</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>etf.nwt</groupId>
+			<artifactId>system-events</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -67,6 +86,15 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
+		<resources>
+	      <resource>
+		     <directory>src/main/resources</directory>
+		     <filtering>true</filtering>
+		     <includes>
+		          <include>**/*.properties</include>
+		     </includes>
+		  </resource>
+	    </resources>
 	</build>
 
 	<dependencyManagement>
