@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>etf.nwt</groupId>
-	<artifactId>user-microservice</artifactId>
+	<artifactId>data-microservice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>user-microservice</name>
-	<description>User microservice</description>
+	<name>data-microservice</name>
+	<description>Data microservice</description>
 
 	<properties>
 		<java.version>1.8</java.version>
@@ -62,30 +62,8 @@
 			</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-test</artifactId>
-		    <version>2.2.2.RELEASE</version>
-		</dependency>
-		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-netty-shaded</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>io.grpc</groupId>
-		    <artifactId>grpc-protobuf</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>io.grpc</groupId>
-		    <artifactId>grpc-stub</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>etf.nwt</groupId>
-			<artifactId>system-events</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 	</dependencies>
 
@@ -96,15 +74,6 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 		</plugins>
-		<resources>
-	      <resource>
-		     <directory>src/main/resources</directory>
-		     <filtering>true</filtering>
-		     <includes>
-		          <include>**/*.properties</include>
-		     </includes>
-		  </resource>
-	    </resources>
 	</build>
 
 	<dependencyManagement>

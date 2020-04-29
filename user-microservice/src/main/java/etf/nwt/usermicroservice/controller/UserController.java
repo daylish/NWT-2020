@@ -33,6 +33,7 @@ import com.netflix.appinfo.InstanceInfo;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.shared.Application;
 
+import etf.nwt.systemevents.EventsServiceGrpc;
 import etf.nwt.usermicroservice.exception.InvalidParametersException;
 import etf.nwt.usermicroservice.exception.UserNotFoundException;
 import etf.nwt.usermicroservice.model.User;
@@ -45,7 +46,9 @@ import net.minidev.json.JSONObject;
 @EnableAutoConfiguration
 @RestController
 public class UserController {
-	
+	// gRPC stuff
+    private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
+
 	private UserRepository userRepository;
 	
 	@Autowired
@@ -59,8 +62,6 @@ public class UserController {
 	@Value("${service.list}")
 	private String listServiceID;
 	*/
-	
-	// gRPC stuff goes here maybe?
 	
 	UserController(UserRepository repository) {
 		this.userRepository = repository;
