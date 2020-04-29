@@ -45,17 +45,6 @@ public class ListaServis {
         listaRepository.save(lista);
     }
 
-    public ListaServis(
-            @Value("${grpc.host}") String grpcHost,
-            @Value("${grpc.port}") Integer grpcPort
-    ) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(grpcHost, grpcPort)
-                .usePlaintext()
-                .build();
-
-        eventsService = EventsServiceGrpc.newBlockingStub(channel);
-    }
-
     public List<ListItem> getListsItems(Long listId) {
         Optional<Lista> l = listaRepository.findById(listId);
         if(l.isPresent())
