@@ -1,5 +1,6 @@
 package etf.nwt.systemevents;
 
+import etf.nwt.systemevents.db.EventRequest;
 import io.grpc.BindableService;
 import io.grpc.ServerServiceDefinition;
 import io.grpc.stub.StreamObserver;
@@ -8,7 +9,7 @@ public class EventsServiceImpl implements BindableService {
 	
 	// the method that gets all the relevant information 
 	public void hello(
-      EventRequest request, StreamObserver<EventResponse> responseObserver) {
+			EventRequest request, StreamObserver<EventResponse> responseObserver) {
  
         String eventResponseText = new StringBuilder()
           .append("Object type: ")
@@ -21,7 +22,9 @@ public class EventsServiceImpl implements BindableService {
           .append(request.getEventTimestamp())
           .toString();
  
-        EventResponse response = new EventResponse(eventResponseText);
+        EventResponse response = EventResponse.newBuilder()
+				.setEventResponseText(eventResponseText)
+				.build();
  
         responseObserver.onNext(response);
         responseObserver.onCompleted();
@@ -29,6 +32,5 @@ public class EventsServiceImpl implements BindableService {
 
 	@Override
 	public ServerServiceDefinition bindService() {
-		// TODO Auto-generated method stub
-		return null;
+		return ServerServiceDefinition.builder("eventService").build();
 	}}
