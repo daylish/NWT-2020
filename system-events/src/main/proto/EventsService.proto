@@ -2,11 +2,26 @@ syntax = "proto3";
 option java_multiple_files = true;
 package etf.nwt.systemevents;
 
+//  timestamp akcije, naziv mikroservisa u kojem se akcija desila, user koji je pokrenuo akciju - možete dodati poslije,
+//  tip akcije - create, delete, get, update, naziv resursa nad kojim se dešava akcija,
+//  tip odgovora na akciju - uspješno završena akcija, greška.
 message EventRequest {
-    string objectType = 1;
-    string requestType = 2;
-    string responseType = 3;
-    string requestTimestamp = 4;
+    string actionTimestamp = 1;
+    string serviceName = 2;
+    int64 userId = 3;
+    enum ActionType {
+      CREATE = 0;
+      DELETE = 1;
+      GET = 2;
+      UPDATE = 3;
+    }
+    ActionType actionType = 4;
+    string resourceName = 5;
+    enum ResponseType {
+      Success = 0;
+      Failure = 1;
+    }
+    ResponseType responseType = 6;
 }
 
 message EventResponse {
