@@ -1,4 +1,4 @@
-package etf.nwt.systemevents;
+package etf.nwt.systemevents.db;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
