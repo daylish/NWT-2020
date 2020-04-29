@@ -16,6 +16,12 @@ message EventRequest {
       DELETE = 1;
       GET = 2;
       UPDATE = 3;
+      HEAD = 4;
+      PATCH = 5;
+      PUT = 6;
+      TRACE = 7;
+      POST = 8;
+      OPTIONS = 9;
     }
     ActionType actionType = 4;
     string resourceName = 5;
