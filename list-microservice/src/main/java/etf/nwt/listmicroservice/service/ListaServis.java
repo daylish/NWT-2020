@@ -6,7 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import etf.nwt.systemevents.EventRequest;
+import etf.nwt.systemevents.EventResponse;
+import etf.nwt.systemevents.EventsServiceGrpc;
+import io.grpc.ManagedChannel;
+import io.grpc.ManagedChannelBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +31,8 @@ public class ListaServis {
     @Autowired
     private ListItemRepository listItemRepository;
 
+    private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
+
     public List<Lista> getAllLists() {
         return listaRepository.findAll();
     }
@@ -35,6 +43,17 @@ public class ListaServis {
 
     public void createList(Lista lista) {
         listaRepository.save(lista);
+    }
+
+    public ListaServis(
+            @Value("${grpc.host}") String grpcHost,
+            @Value("${grpc.port}") Integer grpcPort
+    ) {
+        ManagedChannel channel = ManagedChannelBuilder.forAddress(grpcHost, grpcPort)
+                .usePlaintext()
+                .build();
+
+        eventsService = EventsServiceGrpc.newBlockingStub(channel);
     }
 
     public List<ListItem> getListsItems(Long listId) {
