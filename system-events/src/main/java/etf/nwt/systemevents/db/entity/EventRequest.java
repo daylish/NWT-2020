@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name="Events") 
+@Table(name="events")
 public class EventRequest {
 
 	@Id
