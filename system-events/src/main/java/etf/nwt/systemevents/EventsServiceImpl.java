@@ -6,6 +6,7 @@ import io.grpc.ServerBuilder;
 import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -21,17 +22,18 @@ public class EventsServiceImpl extends EventsServiceGrpc.EventsServiceImplBase {
     private final EventRequestRepository eventRequestRepository;
 
     public EventsServiceImpl(
-            EventRequestRepository eventRequestRepository
+            EventRequestRepository eventRequestRepository,
+            @Value("${grpc.port}") Integer port
     ) throws IOException {
         this.eventRequestRepository = eventRequestRepository;
 
-        Server server = ServerBuilder.forPort(8089)
+        Server server = ServerBuilder.forPort(port)
                 .addService(this)
                 .build();
 
-        System.out.println("Starting server...");
+        logger.info("Starting server...");
         server.start();
-        System.out.println("Server started!");
+        logger.info("Server started!");
     }
 
 
