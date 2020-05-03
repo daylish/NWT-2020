@@ -86,7 +86,7 @@ public class EventInterceptor extends HandlerInterceptorAdapter {
         EventResponse res = eventsService.hello(
                 EventRequest.newBuilder()
                         .setServiceName("user")
-                        .setActionTimestamp(Timestamp.newBuilder().setSeconds(System.nanoTime() / 1_000_000).build())
+                        .setActionTimestamp(Timestamp.newBuilder().setSeconds(Instant.now().getEpochSecond()).build())
                         .setUserId(0) 
                         .setActionType(actionType)
                         .setResourceName(resourceName)
