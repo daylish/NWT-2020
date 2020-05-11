@@ -6,6 +6,9 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.Channel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -31,8 +34,13 @@ public class QueueProducer {
 	public void produce(Object objectToSend) throws Exception {
 
 		logger.info("Storing object...");
-		rabbitTemplate.setExchange(fanoutExchange);
-		rabbitTemplate.convertAndSend(new ObjectMapper().writeValueAsString(objectToSend));
-		logger.info("Object stored in queue sucessfully");
+		try {
+			rabbitTemplate.setExchange(fanoutExchange);
+			rabbitTemplate.convertAndSend(new ObjectMapper().writeValueAsString(objectToSend));
+		}
+		catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+		}
+		logger.info("Object " + objectToSend.toString() + " stored in queue sucessfully");
 	}
 }

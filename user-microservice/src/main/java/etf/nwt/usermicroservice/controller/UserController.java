@@ -3,6 +3,8 @@ package etf.nwt.usermicroservice.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,6 +50,12 @@ import net.minidev.json.JSONObject;
 @EnableAutoConfiguration
 @RestController
 public class UserController {
+	
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	QueueProducer queueProducer;
+
 	// gRPC stuff
     private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
 
@@ -352,10 +360,10 @@ public class UserController {
             Object movie = restTemplate.postForObject(url, request, Object.class);
             
             // adding movie object to message queue
-            RabbitTemplate rabbitTemplate = new RabbitTemplate();
-            QueueProducer queueProducer = new QueueProducer(rabbitTemplate);
-            queueProducer.produce(movie);
-            
+	        //RabbitTemplate rabbitTemplate = new RabbitTemplate();
+	        //QueueProducer queueProducer = new QueueProducer(rabbitTemplate);
+	        queueProducer.produce(movie);
+
             return movie;
         }
         catch (Exception e) {

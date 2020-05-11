@@ -2,16 +2,20 @@ package etf.nwt.datamicroservice.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.json.JsonParseException;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import etf.nwt.datamicroservice.model.Movie;
 import etf.nwt.datamicroservice.repository.MovieRepository;
 
 @Component
-public class QueueConsumer {
+public class QueueConsumer implements MessageListener {
 
 	@Autowired
 	MovieRepository movieRepositoryImpl;
@@ -23,6 +27,14 @@ public class QueueConsumer {
 		logger.info("Received (String) " + message);
 		processMessage(message);
 	}
+	
+    public void onMessage(Message message) {
+        try {
+            System.out.println("Consuming Message = " + message.getBody());
+        } catch (Exception e) {
+
+        }
+    }
 
 	public void receiveMessage(byte[] message) {
 		
@@ -33,6 +45,9 @@ public class QueueConsumer {
 
 	private void processMessage(String message) {
 		try {
+			logger.info("Reached message processing.");
+			Movie movie = new ObjectMapper().readValue(message, Movie.class);
+			logger.info("Received object: " + movie.toString());
 
 		/*
 		} catch (JsonParseException e) {
