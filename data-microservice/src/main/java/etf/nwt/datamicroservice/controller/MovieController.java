@@ -31,12 +31,16 @@ import etf.nwt.datamicroservice.exception.InvalidParametersException;
 import etf.nwt.datamicroservice.exception.MovieNotFoundException;
 import etf.nwt.datamicroservice.model.Movie;
 import etf.nwt.datamicroservice.repository.MovieRepository;
+import etf.nwt.datamicroservice.util.QueueConsumer;
 
 @EnableJpaRepositories("etf.nwt.datamicroservice.repository")
 @EntityScan("etf.nwt.datamicroservice.model")
 @PropertySource(value = "communication.properties", ignoreResourceNotFound = true)
 @RestController
 public class MovieController {
+	
+	@Autowired
+	QueueConsumer queueConsumer;
 	
 	private MovieRepository movieRepository;
 	

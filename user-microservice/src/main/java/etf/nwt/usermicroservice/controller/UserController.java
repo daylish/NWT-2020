@@ -3,6 +3,9 @@ package etf.nwt.usermicroservice.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -38,6 +41,7 @@ import etf.nwt.usermicroservice.exception.InvalidParametersException;
 import etf.nwt.usermicroservice.exception.UserNotFoundException;
 import etf.nwt.usermicroservice.model.User;
 import etf.nwt.usermicroservice.repository.UserRepository;
+import etf.nwt.usermicroservice.util.QueueProducer;
 import net.minidev.json.JSONObject;
 
 @EnableJpaRepositories("etf.nwt.usermicroservice.repository")
@@ -46,6 +50,12 @@ import net.minidev.json.JSONObject;
 @EnableAutoConfiguration
 @RestController
 public class UserController {
+	
+	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	QueueProducer queueProducer;
+
 	// gRPC stuff
     private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
 
@@ -318,5 +328,46 @@ public class UserController {
 		ResponseEntity<?> res = rt.postForEntity(url, req, Object.class);
 
 		return res;
+	}
+	
+	// RabbitMQ part
+	@PostMapping("/users/{id}/movies/addrabbit")
+	@ResponseBody
+	Object addMovieByUserRabbit(@PathVariable Long id, @RequestParam(name="title", required = true) String title,
+					@RequestParam(name = "description", required = true) String description,
+					@RequestParam(name = "genre", required = true) String genre,
+					@RequestParam(name = "year", required = true) int year) throws InvalidParametersException {
+		
+		// fetching relevant data from eureka
+		Application application = eurekaClient.getApplication(dataServiceID);
+        InstanceInfo instanceInfo = application.getInstances().get(0);
+        String url = "http://" + instanceInfo.getIPAddr() + ":" + instanceInfo.getPort() + "/" + "movies/newpc";
+        //System.out.println("URL: " + url);
+        
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+
+        MultiValueMap<String, String> map= new LinkedMultiValueMap<String, String>();
+        map.add("title", title);
+        map.add("description", description);
+        map.add("genre", genre);
+        map.add("year", Integer.toString(year));
+        map.add("creatorID", id.toString());
+
+        HttpEntity<MultiValueMap<String, String>> request = new HttpEntity<MultiValueMap<String, String>>(map, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        try {
+            Object movie = restTemplate.postForObject(url, request, Object.class);
+            
+            // adding movie object to message queue
+	        //RabbitTemplate rabbitTemplate = new RabbitTemplate();
+	        //QueueProducer queueProducer = new QueueProducer(rabbitTemplate);
+	        queueProducer.produce(movie);
+
+            return movie;
+        }
+        catch (Exception e) {
+        	throw new InvalidParametersException("adding new movie", HttpStatus.PRECONDITION_FAILED);
+        }
 	}
 }
