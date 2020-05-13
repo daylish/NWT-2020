@@ -1,26 +1,22 @@
 package etf.nwt.listmicroservice.service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-
-import etf.nwt.systemevents.EventRequest;
-import etf.nwt.systemevents.EventResponse;
-import etf.nwt.systemevents.EventsServiceGrpc;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import etf.nwt.listmicroservice.model.ListItem;
 import etf.nwt.listmicroservice.model.Lista;
 import etf.nwt.listmicroservice.repositories.ListItemRepository;
 import etf.nwt.listmicroservice.repositories.ListaRepository;
+import etf.nwt.listmicroservice.util.Receiver;
+import etf.nwt.systemevents.EventsServiceGrpc;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessagePropertiesBuilder;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 public class ListaServis {
@@ -30,6 +26,24 @@ public class ListaServis {
 
     @Autowired
     private ListItemRepository listItemRepository;
+
+    @Autowired
+    private RabbitTemplate mqTemplate;
+    @Autowired
+    private Receiver mqReceiver;
+
+    public ListaServis(
+            RabbitTemplate mqTemplate,
+            JsonMapper mapper
+    ) throws JsonProcessingException {
+        this.mqTemplate = mqTemplate;
+
+        Lista obj = new Lista(123L, "title", null);
+        mqTemplate.send(new Message(
+                mapper.writeValueAsString(obj).getBytes(),
+                MessagePropertiesBuilder.newInstance().build()
+        ));
+    }
 
     private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
 

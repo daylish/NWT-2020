@@ -4,11 +4,9 @@ import com.google.protobuf.Timestamp;
 import etf.nwt.systemevents.EventRequest;
 import etf.nwt.systemevents.EventResponse;
 import etf.nwt.systemevents.EventsServiceGrpc;
-import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -19,20 +17,10 @@ import java.time.Instant;
 
 @Component
 public class EventInterceptor extends HandlerInterceptorAdapter {
-    private final EventsServiceGrpc.EventsServiceBlockingStub eventsService;
+    private @Autowired
+    EventsServiceGrpc.EventsServiceBlockingStub eventsService;
 
     private final Logger logger = LogManager.getLogger(getClass());
-
-    public EventInterceptor(
-            @Value("${grpc.host}") String grpcHost,
-            @Value("${grpc.port}") Integer grpcPort
-    ) {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress(grpcHost, grpcPort)
-                .usePlaintext()
-                .build();
-
-        eventsService = EventsServiceGrpc.newBlockingStub(channel);
-    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
