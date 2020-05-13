@@ -38,7 +38,7 @@ public class RabbitConfiguration {
 	}
 	
     @Bean
-    public AmqpTemplate getRabbitTemplate(ConnectionFactory connectionFactory) {
+    public RabbitTemplate getRabbitTemplate(ConnectionFactory connectionFactory) {
         return new RabbitTemplate(connectionFactory);
     }
 }

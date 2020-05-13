@@ -1,4 +1,4 @@
-package etf.nwt.datamicroservice.util;
+package etf.nwt.usermicroservice.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +12,14 @@ import org.springframework.stereotype.Component;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import etf.nwt.datamicroservice.model.Movie;
-import etf.nwt.datamicroservice.repository.MovieRepository;
+import etf.nwt.usermicroservice.repository.UserRepository;
 
 @Component
 @RabbitListener(queues="${queue.name}")
 public class QueueConsumer implements MessageListener {
 
 	@Autowired
-	MovieRepository movieRepositoryImpl;
+	UserRepository userRepositoryImpl;
 
 	protected Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -32,8 +31,7 @@ public class QueueConsumer implements MessageListener {
 	
     public void onMessage(Message message) {
         try {
-        	processMessage(message.toString());
-            //System.out.println("Consuming Message Test = " + message.getBody());
+            System.out.println("Consuming Message = " + message.getBody());
         } catch (Exception e) {
 
         }
@@ -49,8 +47,7 @@ public class QueueConsumer implements MessageListener {
 	private void processMessage(String message) {
 		try {
 			logger.info("Reached message processing.");
-			//Movie movie = new ObjectMapper().readValue(message, Movie.class);
-			logger.info("Received object: " + message);
+			logger.info("Received object: whatever");
 
 		/*
 		} catch (JsonParseException e) {
@@ -66,3 +63,4 @@ public class QueueConsumer implements MessageListener {
 		}
 	}
 }
+
