@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import etf.nwt.streammicroservice.config.QueueProducer;
 import etf.nwt.streammicroservice.model.Platform;
 import etf.nwt.streammicroservice.model.Stream;
 import etf.nwt.streammicroservice.service.StreamService;
+
 import org.springframework.web.bind.annotation.PutMapping;
 
 
@@ -25,6 +27,9 @@ public class Controller {
 
     @Autowired
     private StreamService streamService;
+
+    @Autowired
+    private QueueProducer qp;
 
     @GetMapping("/streams")
     public ResponseEntity<List<Stream>> getAllStreams() {
@@ -107,6 +112,11 @@ public class Controller {
 
     @GetMapping("stream/{id}")
     public ResponseEntity<?> getStreamById(@PathVariable("id") Long id) {
+        try {
+            qp.produce(streamService.getStreamById(id).getBody());
+        } catch(Exception e) {
+            
+        }
         return streamService.getStreamById(id);
     }
 
