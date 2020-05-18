@@ -1,0 +1,10 @@
+<h2>List of users:</h2>
+
+<ul class="users">
+  <li *ngFor="let user of users">
+    <span class="badge">{{user.username}}</span>
+      <label> {{user.email}} </label>
+  </li>
+</ul>
+
+<h2>Adding new user form:</h2>
