@@ -105,6 +105,7 @@ public class UserController {
 	
 	// create new user
 	// for some reason needs userLocation instead of location??? - nvm i figured it out
+	@CrossOrigin
 	@PostMapping("/users/new")
 	@ResponseBody
 	User newUser(@RequestBody User newUser) throws InvalidParametersException {
