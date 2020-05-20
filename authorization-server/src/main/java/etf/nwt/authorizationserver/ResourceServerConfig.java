@@ -17,10 +17,8 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
     @Override
     public void configure(HttpSecurity http) throws Exception {
-
         http
                 .requestMatchers()
-                .antMatchers("/api/**")
                 .antMatchers("/oauth2/**")
                 .and().authorizeRequests()
                 .antMatchers("/api/**").access("hasRole('USER')")

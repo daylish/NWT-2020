@@ -40,7 +40,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
                 .inMemory()
                 .withClient("client")
                 .secret(passwordEncoder().encode("pass"))
-                .scopes("resource:read")
+                .scopes("read")
                 .authorizedGrantTypes("authorization_code")
                 .redirectUris("http://localhost:8093/oauth/login/client-app");
     }

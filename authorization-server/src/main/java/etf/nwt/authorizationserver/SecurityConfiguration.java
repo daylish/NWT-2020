@@ -18,6 +18,11 @@ import org.springframework.security.oauth2.provider.token.store.InMemoryTokenSto
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -45,11 +50,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/", "/registration", "/registrationConfirm", "/resendRegistrationToken")
                 .permitAll()
 
-                .antMatchers("/edit/**", "/payment/**", "/plate/**", "/book/**", "/home", "/stop/**",
-                        "/notification/**", "/include/**"
-                )
-                .access("hasRole('USER') or hasRole('ADMIN') or hasRole('PARK')").antMatchers("/admin/**")
-                .access("hasRole('ADMIN') or hasRole('PARK')").antMatchers("/updatePassword")
+                .antMatchers("/api/**").authenticated()
+                //.access("hasRole('USER') or hasRole('ADMIN') or hasRole('PARK')")
+
+                .antMatchers("/admin/**")
+                .access("hasRole('ADMIN')")
+
+                .antMatchers("/updatePassword")
                 .hasAuthority("CHANGE_PASSWORD_PRIVILEGE")
 
                 .and().formLogin()
@@ -72,7 +79,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         .passwordEncoder(p -> passwordEncoder().encode(p))
                         .username("adnan")
                         .password("password")
-                        .roles("USER")
+                        .roles("USER", "ADMIN")
                         .authorities("authorotah")
                         .build()
         );
