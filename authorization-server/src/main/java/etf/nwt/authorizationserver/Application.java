@@ -1,5 +1,6 @@
 package etf.nwt.authorizationserver;
 
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
@@ -34,6 +35,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.Collections;
 
@@ -52,6 +54,7 @@ public class Application {
      */
     @Controller
     public class ExampleController {
+        private ObjectMapper mapper = new ObjectMapper();
 
         @GetMapping("/")
         public String home() {
@@ -59,9 +62,8 @@ public class Application {
         }
 
         @GetMapping("/api/profile")
-        @PreAuthorize("hasAuthority('authorotah')")
-        public String userDetails(Principal principal) {
-            return "details";
+        public String userDetails(Principal principal) throws IOException {
+            return mapper.writeValueAsString(principal);
         }
     }
 
