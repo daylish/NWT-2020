@@ -16,12 +16,17 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Aut
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 
+import javax.sql.DataSource;
+
 @Configuration
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
     @Autowired
     @Qualifier("authenticationManagerBean")
     private AuthenticationManager authManager;
+
+    @Autowired
+    DataSource dataSource;
 
     @Override
     public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -33,16 +38,16 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
-
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .inMemory()
+                .jdbc(dataSource)
                 .withClient("client")
                 .secret(passwordEncoder().encode("pass"))
                 .scopes("read")
                 .authorizedGrantTypes("authorization_code")
-                .redirectUris("http://localhost:8093/oauth/login/client-app");
+                .redirectUris("http://localhost:8093/oauth/login/client-app")
+                .and().build();
     }
 
     @Override
