@@ -1,0 +1,12 @@
+<div class="row col-12" *ngFor="let list of data">
+  <h3 class="col-12">
+  {{list.title}}
+  </h3>
+  <div class="col-4" *ngFor="let item of list.itemsList">
+    {{item.listItemStatus}}
+  </div>
+
+  <button (click)="addNewStatus(list)">+ Add New Status</button>
+</div>
+
+<button class="mt-2" (click)="addNew()">+ Add New List</button>
