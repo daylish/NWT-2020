@@ -1,22 +1,15 @@
 package etf.nwt.listmicroservice.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 public class Lista {
@@ -34,7 +27,7 @@ public class Lista {
     private String title;
 
     @NotNull(message = "Date cannot be null")
-    private Date date;
+    private Date date = new Date();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "lista", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
