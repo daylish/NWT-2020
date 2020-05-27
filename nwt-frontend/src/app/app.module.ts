@@ -8,11 +8,14 @@ import { AppComponent } from './app.component';
 import { DataDisplayComponent } from './data-display/data-display.component';
 import { UserDisplayComponent } from './user-display/user-display.component';
 import { ListDisplayComponent } from './list-display/list-display.component';
+import { StreamComponent } from './stream/stream.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     DataDisplayComponent,
+    UserDisplayComponent,
+    StreamComponent,
     UserDisplayComponent,
     ListDisplayComponent
   ],

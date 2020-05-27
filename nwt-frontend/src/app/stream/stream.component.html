@@ -1,0 +1,8 @@
+<div>
+    <ul *ngFor="let stream of streams">
+        <li>
+            <a href="{{stream.platform.link}}">{{stream.platform.name}}</a>
+            <label>Stream link: {{stream.link}} for JUST {{stream.platform.price}}$</label>
+        </li>
+    </ul>
+</div>
