@@ -17,7 +17,7 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  /** GET users from the server */
+  /* GET users from the server */
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.usersUrl);
   }
@@ -43,5 +43,9 @@ export class UserService {
       listItemID: null
     };
     return this.http.post<any>(this.listsUrl + '/' + listID + '/new', body);
+  }
+
+  postUser(userFormData: string): Observable<User> {
+    return this.http.post<User>(this.usersUrl + '/new', userFormData);
   }
 }

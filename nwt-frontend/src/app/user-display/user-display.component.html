@@ -8,7 +8,35 @@
 </ul>
 
 <h2>Adding new user form:</h2>
-<div class="container">
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <label>
+    Username:
+    <input type="text" formControlName="username">
+  </label>
+
+  <label>
+    Password:
+    <input type="password" formControlName="password">
+  </label>
+
+  <label>
+    E-mail:
+    <input type="text" formControlName="email">
+  </label>
+
+  <label>
+    Location:
+    <input type="text" formControlName="location">
+  </label>
+
+  <button type="submit" [disabled]="!userForm.valid">Submit</button>
+  <p>
+  Form Status: {{ userForm.status }}
+  </p>
+</form>
+
+<!--<div class="container">
     <form [formGroup]="form" (ngSubmit)="submitForm()">
 
         <div class="form-group input-group-lg">
@@ -22,4 +50,4 @@
             <button class="btn btn-danger btn-block btn-lg">Add user</button>
         </div>
     </form>
-</div>
+</div>-->
