@@ -161,6 +161,7 @@ public class UserController {
 	}
 	
 	// delete existing user
+	@CrossOrigin
 	@DeleteMapping("/users/delete/{id}")
 	void deleteUser(@PathVariable Long id) throws UserNotFoundException {
 		try {

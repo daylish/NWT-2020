@@ -23,6 +23,7 @@ export class UserDisplayComponent implements OnInit {
   });
 
   // just for eventual testing purposes
+  /*
   user: User = {
     userID: 1,
     username: 'testusername',
@@ -30,6 +31,7 @@ export class UserDisplayComponent implements OnInit {
     email: 'testemail@gmail.com',
     location: 'USA'
   };
+  */
 
   users: User[];
 
@@ -49,6 +51,11 @@ export class UserDisplayComponent implements OnInit {
 
   ngOnInit() {
     this.getUsers();
+  }
+
+  onDeleteClicked(item: User) {
+    console.warn("Clicked on user with id " + item.userId + " and username " + item.username);
+    this.userService.deleteUser(item.userId).subscribe();
   }
 
   getUsers(): void {

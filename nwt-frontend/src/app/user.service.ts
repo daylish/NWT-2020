@@ -48,4 +48,8 @@ export class UserService {
   postUser(userFormData: string): Observable<User> {
     return this.http.post<User>(this.usersUrl + '/new', userFormData);
   }
+
+  deleteUser(userID: number): Observable<User> {
+    return this.http.delete<User>(this.usersUrl + '/delete/' + userID);
+  }
 }
