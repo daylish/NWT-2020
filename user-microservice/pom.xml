@@ -114,6 +114,7 @@
 		     </includes>
 		  </resource>
 	    </resources>
+	    <finalName>user-microservice</finalName>
 	</build>
 
 	<dependencyManagement>
