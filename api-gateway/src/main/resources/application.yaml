@@ -1,0 +1,9 @@
+security:
+  oauth2:
+    client:
+      clientId: client
+      clientSecret: pass
+    resource:
+      jwt:
+        key-value: nwt2020supersecret
+
