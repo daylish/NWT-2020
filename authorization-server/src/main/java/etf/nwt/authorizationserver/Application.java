@@ -95,7 +95,7 @@ public class Application {
             }
         }
 
-        @RequestMapping(value = "/api/profile", method = RequestMethod.GET)
+        @RequestMapping(value = "/profile", method = RequestMethod.GET)
         public ResponseEntity<String> userDetails(Principal principal) throws IOException {
             return ResponseEntity.ok(mapper.writeValueAsString(principal));
         }
