@@ -10,12 +10,14 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.provider.token.store.InMemoryTokenStore;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.time.LocalDate;
@@ -26,16 +28,12 @@ import java.util.stream.Collectors;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
     @Autowired
-    @Qualifier("customUserDetailsService")
-    UserDetailsService userDetailsService;
-
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     @Autowired
-    public void configureGlobalService(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-
-    }
+    private UserDetailsService jwtUserDetailsService;
+    @Autowired
+    private JwtRequestFilter jwtRequestFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -69,26 +67,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         http.csrf().disable();
 
+        // make sure we use stateless session; session won't be used to
+        // store user's state.
+        http.exceptionHandling()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                .and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+        // Add a filter to validate the tokens with every request
+        http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+
     }
 
-    @Qualifier("customUserDetailsService")
-    @Bean
-    UserDetailsService makeUserDetailsService() {
-        return new InMemoryUserDetailsManager(
-                User.builder()
-                        .passwordEncoder(p -> passwordEncoder().encode(p))
-                        .username("admin")
-                        .password("password")
-                        .roles("USER")
-                        .build(),
-                User.builder()
-                        .passwordEncoder(p -> passwordEncoder().encode(p))
-                        .username("user")
-                        .password("password")
-                        .roles("USER")
-                        .build()
-        );
-    }
 
     @Override
     @Bean
@@ -96,9 +86,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-    @Bean
-    public InMemoryTokenStore persistentTokenRepository() {
-        InMemoryTokenStore store = new InMemoryTokenStore();
-        return store;
+
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
+
 }

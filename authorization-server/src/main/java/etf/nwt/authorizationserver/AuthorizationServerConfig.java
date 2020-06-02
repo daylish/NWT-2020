@@ -41,13 +41,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients
-                .jdbc(dataSource)
-                .withClient("client")
-                .secret(passwordEncoder().encode("pass"))
-                .scopes("read")
-                .authorizedGrantTypes("authorization_code")
-                .redirectUris("http://localhost:8093/oauth/login/client-app")
-                .and().build();
+                .jdbc(dataSource);
     }
 
     @Override

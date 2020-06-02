@@ -1,4 +1,4 @@
-create table oauth_client_details
+create table if not exists oauth_client_details
 (
     client_id               VARCHAR(256) PRIMARY KEY,
     resource_ids            VARCHAR(256),
@@ -13,7 +13,7 @@ create table oauth_client_details
     autoapprove             VARCHAR(256)
 );
 
-create table oauth_client_token
+create table if not exists oauth_client_token
 (
     token_id          VARCHAR(256),
     token             bytea,
@@ -22,7 +22,7 @@ create table oauth_client_token
     client_id         VARCHAR(256)
 );
 
-create table oauth_access_token
+create table if not exists oauth_access_token
 (
     token_id          VARCHAR(256),
     token             bytea,
@@ -33,20 +33,20 @@ create table oauth_access_token
     refresh_token     VARCHAR(256)
 );
 
-create table oauth_refresh_token
+create table if not exists oauth_refresh_token
 (
     token_id       VARCHAR(256),
     token          bytea,
     authentication bytea
 );
 
-create table oauth_code
+create table if not exists oauth_code
 (
     code           VARCHAR(256),
     authentication bytea
 );
 
-create table oauth_approvals
+create table if not exists oauth_approvals
 (
     userId         VARCHAR(256),
     clientId       VARCHAR(256),
@@ -55,3 +55,31 @@ create table oauth_approvals
     expiresAt      TIMESTAMP,
     lastModifiedAt TIMESTAMP
 );
+
+truncate oauth_client_details;
+
+insert into oauth_client_details(
+    client_id,
+    resource_ids,
+    client_secret,
+    scope,
+    authorized_grant_types,
+    web_server_redirect_uri,
+    authorities,
+    access_token_validity,
+    refresh_token_validity,
+    additional_information,
+    autoapprove
+) select
+    'client',
+    '',
+    '$2a$10$/usvQz6MvibbDsvM28qTkeABxBvyHZX0BgveSlTiCD0ixcbFeSrUu', -- 'pass'
+    'read',
+    'password', -- client_credentials
+    'http://localhost:8087/oauth/login/client-app',
+    '',
+    null,
+    null,
+    '{}',
+    ''
+where 0 = (select count(*) from oauth_client_details);
