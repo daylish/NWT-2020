@@ -35,8 +35,8 @@ export class UserService {
     return this.http.delete<User>(this.url + '/delete/' + userID);
   }
 
-  getMe(jwt?: string): Observable<User> {
-    return this.http.get<User>(this.url + '/users/me', {
+  getMe(jwt?: string): Observable<JwtInfo> {
+    return this.http.get<JwtInfo>(this.url + '/users/me', {
       headers: {
         Authorization: jwt
       }
@@ -65,7 +65,7 @@ export class UserService {
       flatMap((token: Token) => {
         return this.getMe(token.token)
           .pipe(
-            map((me: User): LoggedUser => {
+            map((me: JwtInfo): LoggedUser => {
               const res = {
                 token: token.token,
                 user: me,
@@ -73,7 +73,7 @@ export class UserService {
               this.setCurrentUser(res);
               return res;
             })
-          )
+          );
       })
     );
   }
@@ -85,5 +85,10 @@ export interface Token {
 
 export interface LoggedUser {
   token: string;
-  user: User;
+  user: JwtInfo;
+}
+
+export interface JwtInfo {
+  sub: string;
+  authorities: string[];
 }

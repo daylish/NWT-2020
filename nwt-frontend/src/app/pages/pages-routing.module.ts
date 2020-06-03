@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { PagesComponent } from './pages.component';
 import {NotFoundComponent} from './not-found/not-found.component';
+import {DashboardComponent} from "./dashboard/dashboard.component";
 
 const routes: Routes = [{
   path: '',
@@ -12,6 +13,11 @@ const routes: Routes = [{
     {
       path: '',
       redirectTo: 'dashboard',
+      pathMatch: 'full',
+    },
+    {
+      path: 'dashboard',
+      component: DashboardComponent,
       pathMatch: 'full',
     },
     {
