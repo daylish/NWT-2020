@@ -61,11 +61,20 @@ public class User {
 	protected User() {}
 
 	public User(String username, String email, String location) {
-	    this.username = username;
-	    this.password = "passwordFillerBecausePasswordsAreComplicated";
-	    this.email = email;
-	    this.location = location;
-	    this.userAboutMe = "";
+		this.username = username;
+		this.password = "passwordFillerBecausePasswordsAreComplicated";
+		this.email = email;
+		this.location = location;
+		this.userAboutMe = "";
+	}
+
+	public User(String username, String email, String location, String roles) {
+		this.username = username;
+		this.password = "passwordFillerBecausePasswordsAreComplicated";
+		this.email = email;
+		this.location = location;
+		this.userAboutMe = "";
+		this.roles = roles;
 	}
 	
 	@Override
