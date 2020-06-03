@@ -1,6 +1,6 @@
 FROM openjdk:11
 
-ARG APP_FILE=system-events-0.0.1-SNAPSHOT.jar
+ARG APP_FILE=system-events-0.0.1-SNAPSHOT-exec.jar
 ARG PORT=8089
 
 ENV VERTICLE_PATH target/$APP_FILE
