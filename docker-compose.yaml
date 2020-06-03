@@ -15,8 +15,8 @@ services:
     container_name: rabbit
     hostname: rabbit
     ports:
-    - 5672:5672
-    - 15672:15672
+      - 5672:5672
+      - 15672:15672
 
   nwtg2-eureka:
     build:
@@ -56,7 +56,7 @@ services:
     container_name: nwtg2-datams
     hostname: datams
     ports:
-    - 8082:8082
+      - 8082:8082
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -68,7 +68,7 @@ services:
     container_name: nwtg2-listms
     hostname: listms
     ports:
-    - 8083:8083
+      - 8083:8083
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -80,7 +80,7 @@ services:
     container_name: nwtg2-streamms
     hostname: streamms
     ports:
-    - 8084:8084
+      - 8084:8084
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -92,8 +92,38 @@ services:
     container_name: nwtg2-systemevents
     hostname: systemevents
     ports:
-    - 8089:8089
+      - 8089:8089
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
       - nwtg2-eureka
+
+  nwtg2-userms:
+    build:
+      context: ./user-microservice
+    container_name: nwtg2-userms
+    hostname: userms
+    ports:
+      - 8081:8081
+    depends_on:
+      - nwtg2-db
+      - nwtg2-rabbit
+      - nwtg2-eureka
+
+
+  nwtg2-frontend:
+    build:
+      context: ./nwt-frontend
+    container_name: nwtg2-frontend
+    hostname: frontend
+    ports:
+      - 1112:80 # frontend se otvara na http://localhost:1112
+    depends_on:
+      - nwtg2-rabbit
+      - nwtg2-apigw
+      - nwtg2-authserver
+      - nwtg2-datams
+      - nwtg2-listms
+      - nwtg2-streamms
+      - nwtg2-systemevents
+      - nwtg2-userms
