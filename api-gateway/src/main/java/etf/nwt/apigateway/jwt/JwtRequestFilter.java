@@ -4,6 +4,7 @@ package etf.nwt.apigateway.jwt;
 import etf.nwt.apigateway.JWTUtil;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,6 +24,7 @@ import java.io.IOException;
 public class JwtRequestFilter extends OncePerRequestFilter {
 
     private final JWTUtil jwtTokenUtil;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
     public JwtRequestFilter(JWTUtil jwtTokenUtil) {
         this.jwtTokenUtil = jwtTokenUtil;
@@ -57,6 +59,8 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             Claims claims = jwtTokenUtil.getAllClaimsFromToken(jwtToken);
+            logger.info("User claims " + objectMapper.writeValueAsString(claims));
+
             if (claims != null) {
                 UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
                         claims, null, null
