@@ -35,7 +35,7 @@ public class JwtUserDetailsService implements UserDetailsService {
                     )))
                     .collect(Collectors.toList());
             return new User(
-                    "user",
+                    username,
                     passwordEncoder.encode(user.getPassword()),
                     authorities
             );
