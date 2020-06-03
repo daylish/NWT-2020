@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 
+import etf.nwt.usermicroservice.util.UserMicroserviceApplication;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -35,7 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import etf.nwt.usermicroservice.controller.UserController;
 
 // ya this one was a failure
-@SpringBootTest
+@SpringBootTest(classes = UserMicroserviceApplication.class)
 @RunWith(SpringJUnit4ClassRunner.class)
 @AutoConfigureMockMvc
 class UserMicroserviceApplicationTests {
