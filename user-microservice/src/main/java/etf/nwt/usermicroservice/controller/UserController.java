@@ -3,6 +3,8 @@ package etf.nwt.usermicroservice.controller;
 import java.util.List;
 import java.util.Map;
 
+import etf.nwt.usermicroservice.util.JWTUtil;
+import io.jsonwebtoken.Claims;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -21,16 +23,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 import com.netflix.appinfo.InstanceInfo;
@@ -56,6 +49,8 @@ public class UserController {
 	
 	@Autowired
 	QueueProducer queueProducer;
+	@Autowired
+	JWTUtil jwtUtil;
 
 	// gRPC stuff
     private EventsServiceGrpc.EventsServiceBlockingStub eventsService;
@@ -270,6 +265,12 @@ public class UserController {
         RestTemplate restTemplate = new RestTemplate();
         Object[] shows = restTemplate.getForObject(url, Object[].class);
         return shows;
+	}
+
+	@GetMapping("/users/me")
+	@ResponseBody
+	Claims getLoggedUser(@RequestHeader("Authorization") String jwt) {
+		return jwtUtil.getAllClaimsFromToken(jwt);
 	}
 	
 	// get user's reviews

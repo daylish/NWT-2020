@@ -43,6 +43,10 @@ public class User {
 	// email should be unique
 	@Column(unique = true)
     private String email;
+
+	@NotNull (message = "Authorities cannot be null.")
+	@Column()
+	private String roles = "user";
 	
 	@NotBlank
 	@NotNull(message = "Location cannot be null.")
