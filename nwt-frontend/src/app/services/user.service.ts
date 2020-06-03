@@ -35,6 +35,14 @@ export class UserService {
     return this.http.delete<User>(this.url + '/delete/' + userID);
   }
 
+  getMe(jwt?: string): Observable<User> {
+    return this.http.get<User>(this.url + '/users/me', {
+      headers: {
+        Authorization: jwt
+      }
+    });
+  }
+
 
 
   private setCurrentUser(user: LoggedUser) {
@@ -46,7 +54,7 @@ export class UserService {
   }
 
   login(user: string, pass: string) {
-    return this.http.post<LoggedUser>(this.loginUrl, {
+    return this.http.post<Token>(this.loginUrl, {
       username: user,
       password: pass
     }, {
@@ -54,13 +62,18 @@ export class UserService {
         Authorization: 'Basic ' + Config.apiKey
       }
     }).pipe(
-      flatMap(token => {
-        console.log('have token ', token);
-        // todo get user
-        return observableOf({
-          token: token,
-          user: null,
-        });
+      flatMap((token: Token) => {
+        return this.getMe(token.token)
+          .pipe(
+            map((me: User): LoggedUser => {
+              const res = {
+                token: token.token,
+                user: me,
+              };
+              this.setCurrentUser(res);
+              return res;
+            })
+          )
       })
     );
   }

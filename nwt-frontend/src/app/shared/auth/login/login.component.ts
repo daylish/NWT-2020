@@ -11,8 +11,8 @@ const REMEMBER_ME_ITEM = 'login_remembered_user';
 })
 export class LoginComponent implements OnInit {
 
-    user = '';
-    pass = '';
+    user = 'nluebbert0';
+    pass = 'passwordFillerBecausePasswordsAreComplicated';
 
     rememberMe = false;
 
