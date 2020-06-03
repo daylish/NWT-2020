@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {List} from '../list';
-import {UserService} from '../user.service';
+import {UserService} from '../services/user.service';
+import {ListService} from "../services/list.service";
 
 @Component({
   selector: 'app-list-display',
@@ -10,7 +11,10 @@ import {UserService} from '../user.service';
 export class ListDisplayComponent implements OnInit {
   data: List[] = [];
 
-  constructor(private userService: UserService) {
+  constructor(
+    private userService: UserService,
+    private listService: ListService
+  ) {
     this.reload();
   }
 
@@ -18,7 +22,7 @@ export class ListDisplayComponent implements OnInit {
   }
 
   reload() {
-    this.userService.getLists().subscribe(data => this.data = data );
+    this.listService.getLists().subscribe(data => this.data = data );
   }
 
   addNew() {
@@ -27,7 +31,7 @@ export class ListDisplayComponent implements OnInit {
       window.alert('Los naziv');
       return;
     }
-    this.userService.createList(name).subscribe(() => this.reload(), console.error);
+    this.listService.createList(name).subscribe(() => this.reload(), console.error);
   }
 
   addNewStatus(list: List) {
@@ -36,6 +40,6 @@ export class ListDisplayComponent implements OnInit {
       window.alert('Los naziv');
       return;
     }
-    this.userService.createListItem(list.listID, name).subscribe(() => this.reload(), console.error);
+    this.listService.createListItem(list.listID, name).subscribe(() => this.reload(), console.error);
   }
 }

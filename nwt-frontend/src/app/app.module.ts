@@ -9,6 +9,9 @@ import { DataDisplayComponent } from './data-display/data-display.component';
 import { UserDisplayComponent } from './user-display/user-display.component';
 import { ListDisplayComponent } from './list-display/list-display.component';
 import { StreamComponent } from './stream/stream.component';
+import {SharedModule} from './shared/shared.module';
+import { PagesComponent } from './pages/pages.component';
+import {AuthGuardService} from './shared/services/authguard.service';
 
 @NgModule({
   declarations: [
@@ -17,15 +20,16 @@ import { StreamComponent } from './stream/stream.component';
     UserDisplayComponent,
     StreamComponent,
     UserDisplayComponent,
-    ListDisplayComponent
+    ListDisplayComponent,
   ],
+  providers: [AuthGuardService],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
