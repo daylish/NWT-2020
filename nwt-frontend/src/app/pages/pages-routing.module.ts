@@ -4,6 +4,7 @@ import { NgModule } from '@angular/core';
 import { PagesComponent } from './pages.component';
 import {NotFoundComponent} from './not-found/not-found.component';
 import {DashboardComponent} from "./dashboard/dashboard.component";
+import {UserDisplayComponent} from '../user-display/user-display.component';
 
 const routes: Routes = [{
   path: '',
@@ -18,6 +19,11 @@ const routes: Routes = [{
     {
       path: 'dashboard',
       component: DashboardComponent,
+      pathMatch: 'full',
+    },
+    {
+      path: 'user-list',
+      component: UserDisplayComponent,
       pathMatch: 'full',
     },
     {

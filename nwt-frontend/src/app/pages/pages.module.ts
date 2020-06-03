@@ -4,7 +4,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import {PagesRoutingModule} from './pages-routing.module';
 import {PagesComponent} from './pages.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
-import {NbActionsModule, NbContextMenuModule, NbIconModule, NbUserModule} from '@nebular/theme';
+import {NbActionsModule, NbContextMenuModule, NbIconModule, NbMenuModule, NbUserModule} from '@nebular/theme';
 import {ThemeModule} from '../@theme/theme.module';
 
 
@@ -19,6 +19,7 @@ import {ThemeModule} from '../@theme/theme.module';
     NbUserModule,
     NbContextMenuModule,
     ThemeModule,
+    NbMenuModule,
   ]
 })
 export class PagesModule { }

@@ -16,9 +16,26 @@ export class PagesComponent implements OnInit {
 
   user: JwtInfo;
 
+  menu: NbMenuItem[] = [];
+
+  roleUserMenu: NbMenuItem[] = [];
+  adminMenu: NbMenuItem[] = [
+    {
+      title: 'User List',
+      icon: 'home-outline',
+      link: '/pages/user-list',
+    },
+  ];
 
   constructor(private userService: UserService) {
     this.user = userService.getLoggedUser().user;
+
+    if (this.user.authorities.indexOf('user') >= 0) {
+      this.menu.push(...this.roleUserMenu);
+    }
+    if (this.user.authorities.indexOf('admin') >= 0) {
+      this.menu.push(...this.adminMenu);
+    }
   }
 
   ngOnInit() {
