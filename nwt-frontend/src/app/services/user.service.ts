@@ -37,7 +37,7 @@ export class UserService {
   }
 
   getMe(jwt?: string): Observable<JwtInfo> {
-    return this.http.get<JwtInfo>(this.url + '/users/me', {
+    return this.http.get<JwtInfo>(this.url + '/me', {
       headers: {
         Authorization: jwt
       }
