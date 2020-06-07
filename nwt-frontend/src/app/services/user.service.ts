@@ -20,7 +20,7 @@ export class UserService {
      headers: new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' })
   };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
   /* GET users from the server */
   getUsers(): Observable<User[]> {

@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {List, ListItem} from '../list';
 import {Config} from "./config";
+import {UserService} from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class ListService {
 
   private listsUrl = Config.basepath + '/list-microservice';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private userService: UserService) { }
 
 
   getLists(): Observable<List[]> {
