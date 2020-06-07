@@ -6,6 +6,7 @@ import {List, ListItem} from '../list';
 import {Config} from './config';
 import {flatMap, map} from 'rxjs/operators';
 import {of as observableOf, pipe} from 'rxjs';
+import {ServiceUtils} from './ServiceUtils';
 
 @Injectable({
   providedIn: 'root'
@@ -24,15 +25,15 @@ export class UserService {
 
   /* GET users from the server */
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.url);
+    return this.http.get<User[]>(this.url, ServiceUtils.GetHttpOptions(this));
   }
 
   postUser(userFormData: string): Observable<User> {
-    return this.http.post<User>(this.url + '/new', userFormData);
+    return this.http.post<User>(this.url + '/new', userFormData, ServiceUtils.GetHttpOptions(this));
   }
 
   deleteUser(userID: number): Observable<User> {
-    return this.http.delete<User>(this.url + '/delete/' + userID);
+    return this.http.delete<User>(this.url + '/delete/' + userID, ServiceUtils.GetHttpOptions(this));
   }
 
   getMe(jwt?: string): Observable<JwtInfo> {
