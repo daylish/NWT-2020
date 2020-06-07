@@ -21,10 +21,6 @@ export class UserListComponent implements OnInit {
         title: 'username',
         type: 'string',
       },
-      password: {
-        title: 'password',
-        type: 'string',
-      },
       email: {
         title: 'email',
         type: 'string',

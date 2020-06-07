@@ -13,7 +13,7 @@ import {ServiceUtils} from './ServiceUtils';
 })
 export class UserService {
 
-  private url = Config.basepath + '/user-microservice';
+  private url = Config.basepath + '/user-microservice/users';
   private loginUrl = Config.loginUrl;
 
 

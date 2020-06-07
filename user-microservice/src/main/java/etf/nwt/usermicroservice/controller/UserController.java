@@ -1,5 +1,7 @@
 package etf.nwt.usermicroservice.controller;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +48,7 @@ import net.minidev.json.JSONObject;
 public class UserController {
 	
 	protected Logger logger = LoggerFactory.getLogger(getClass());
-	
+
 	@Autowired
 	QueueProducer queueProducer;
 	@Autowired
@@ -158,6 +160,9 @@ public class UserController {
 	void deleteUser(@PathVariable Long id) throws UserNotFoundException {
 		try {
 			userRepository.deleteById(id);
+
+			// delete all reviews by this user async through mq
+			queueProducer.produce(Collections.singletonMap("userId", id));
 		}
 		catch (Exception e) {
 			throw new UserNotFoundException(HttpStatus.NOT_FOUND, id);

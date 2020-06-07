@@ -7,6 +7,7 @@ import {List} from '../list';
 import {UserService} from './user.service';
 import {ServiceUtils} from './ServiceUtils';
 import {Review} from './model/Review';
+import {Show} from './model/Show';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,9 @@ export class DataService {
 
   getAllReviews(): Observable<Review[]> {
     return this.http.get<Review[]>(this.url + '/reviews', ServiceUtils.GetHttpOptions(this.userService));
+  }
+
+  getAllShows(): Observable<Show[]> {
+    return this.http.get<Show[]>(this.url + '/shows', ServiceUtils.GetHttpOptions(this.userService));
   }
 }
