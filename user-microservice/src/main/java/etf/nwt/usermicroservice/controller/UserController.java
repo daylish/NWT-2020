@@ -74,7 +74,6 @@ public class UserController {
 	}
 	
 	// fetch all users
-	@CrossOrigin
 	@GetMapping("/users")
 	@ResponseBody
 	List<User> allUsers() {
@@ -100,7 +99,6 @@ public class UserController {
 	
 	// create new user
 	// for some reason needs userLocation instead of location??? - nvm i figured it out
-	@CrossOrigin
 	@PostMapping("/users/new")
 	@ResponseBody
 	User newUser(@RequestBody User newUser) throws InvalidParametersException {
@@ -156,7 +154,6 @@ public class UserController {
 	}
 	
 	// delete existing user
-	@CrossOrigin
 	@DeleteMapping("/users/delete/{id}")
 	void deleteUser(@PathVariable Long id) throws UserNotFoundException {
 		try {
