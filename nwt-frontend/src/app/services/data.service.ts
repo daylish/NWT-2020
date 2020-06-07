@@ -31,7 +31,7 @@ export class DataService {
   }
 
   updateMovie(movie: Movie): Observable<Movie> {
-    return this.http.put<Movie>(this.url + '/movies/edit/' + movie.movieID, movie, ServiceUtils.GetHttpOptions(this.userService));
+    return this.http.put<Movie>(this.url + '/movies/edit/' + movie.movieId, movie, ServiceUtils.GetHttpOptions(this.userService));
   }
 
   deleteMovie(id: number): Observable<any> {

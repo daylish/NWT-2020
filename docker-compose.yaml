@@ -7,15 +7,11 @@ services:
     hostname: nwtg2-db
     environment:
       - POSTGRES_PASSWORD=phohhairaetu
-    ports:
-      - 5432:5432
 
   nwtg2-rabbit:
     image: rabbitmq:3-management
-    container_name: rabbit
+    container_name: nwtg2-rabbit
     hostname: nwtg2-rabbit
-    ports:
-      - 5672:5672
       - 15672:15672
 
   nwtg2-eureka:
@@ -23,8 +19,6 @@ services:
       context: ./eureka-service
     container_name: nwtg2-eureka
     hostname: nwtg2-eureka
-    ports:
-      - 8761:8761
 
   nwtg2-apigw:
     build:
@@ -43,8 +37,6 @@ services:
       context: ./authorization-server
     container_name: nwtg2-authserver
     hostname: nwtg2-authserver
-    ports:
-      - 8093:8093
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -55,8 +47,6 @@ services:
       context: ./data-microservice
     container_name: nwtg2-datams
     hostname: nwtg2-datams
-    ports:
-      - 8082:8082
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -67,8 +57,6 @@ services:
       context: ./list-microservice
     container_name: nwtg2-listms
     hostname: nwtg2-listms
-    ports:
-      - 8083:8083
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -79,8 +67,6 @@ services:
       context: ./stream-microservice
     container_name: nwtg2-streamms
     hostname: nwtg2-streamms
-    ports:
-      - 8084:8084
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -91,8 +77,6 @@ services:
       context: ./system-events
     container_name: nwtg2-systemevents
     hostname: nwtg2-systemevents
-    ports:
-      - 8089:8089
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit
@@ -103,8 +87,6 @@ services:
       context: ./user-microservice
     container_name: nwtg2-userms
     hostname: nwtg2-userms
-    ports:
-      - 8081:8081
     depends_on:
       - nwtg2-db
       - nwtg2-rabbit

@@ -3,6 +3,7 @@ import {LocalDataSource} from 'ng2-smart-table';
 import {UserService} from '../../services/user.service';
 import {Router} from '@angular/router';
 import {DataService} from '../../services/data.service';
+import {Review} from '../../services/model/Review';
 
 @Component({
   selector: 'app-movies-list',
@@ -13,16 +14,24 @@ import {DataService} from '../../services/data.service';
 export class MoviesListComponent implements OnInit {
   settings = {
     columns: {
-      userId: {
-        title: 'userId',
+      movieId: {
+        title: 'movieID',
         type: 'string',
       },
-      username: {
-        title: 'username',
+      title: {
+        title: 'title',
         type: 'string',
       },
-      email: {
-        title: 'email',
+      description: {
+        title: 'description',
+        type: 'string',
+      },
+      genre: {
+        title: 'genre',
+        type: 'string',
+      },
+      year: {
+        title: 'year',
         type: 'string',
       },
     },
