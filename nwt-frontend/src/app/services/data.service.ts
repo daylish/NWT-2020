@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {List} from '../list';
 import {UserService} from './user.service';
 import {ServiceUtils} from './ServiceUtils';
+import {Review} from './model/Review';
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,13 @@ export class DataService {
 
   deleteMovie(id: number): Observable<any> {
     return this.http.delete(this.url + '/movies/delete/' + id, ServiceUtils.GetHttpOptions(this.userService));
+  }
+
+  getMoviesByUser(id: number): Observable<Movie[]> {
+    return this.http.get<Movie[]>(this.url + '/movies/creator/' + id, ServiceUtils.GetHttpOptions(this.userService));
+  }
+
+  getAllReviews(): Observable<Review[]> {
+    return this.http.get<Review[]>(this.url + '/reviews', ServiceUtils.GetHttpOptions(this.userService));
   }
 }

@@ -16,14 +16,41 @@ export class PagesComponent implements OnInit {
 
   user: JwtInfo;
 
-  menu: NbMenuItem[] = [];
+  menu: NbMenuItem[] = [
+    {
+      title: 'Dashboard',
+      icon: 'home-outline',
+      link: '/pages/dashboard',
+    },
+  ];
 
-  roleUserMenu: NbMenuItem[] = [];
+  roleUserMenu: NbMenuItem[] = [
+    {
+      title: 'Movie List',
+      icon: 'film-outline',
+      link: '/pages/movie',
+    },
+    {
+      title: 'TV Show List',
+      icon: 'film-outline',
+      link: '/pages/show',
+    },
+  ];
   adminMenu: NbMenuItem[] = [
     {
+      title: 'Add New Movie',
+      icon: 'film-outline',
+      link: '/pages/movie/create',
+    },
+    {
+      title: 'Add New TV Show',
+      icon: 'film-outline',
+      link: '/pages/show/create',
+    },
+    {
       title: 'User List',
-      icon: 'home-outline',
-      link: '/pages/user-list',
+      icon: 'people-outline',
+      link: '/pages/user',
     },
   ];
 
@@ -34,7 +61,11 @@ export class PagesComponent implements OnInit {
       this.menu.push(...this.roleUserMenu);
     }
     if (this.user.authorities.indexOf('admin') >= 0) {
-      this.menu.push(...this.adminMenu);
+      this.menu.push({
+        title: 'Admin Menu',
+        icon: 'settings-2-outline',
+        children: this.adminMenu,
+      });
     }
   }
 
